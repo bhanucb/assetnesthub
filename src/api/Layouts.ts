@@ -1,8 +1,7 @@
 import { IJsonModel, Model } from "flexlayout-react";
 
 export const homeLayoutKey = "homeLayout";
-export const pricingLayoutKey = "pricingLayout";
-export type LayoutKey = typeof homeLayoutKey | typeof pricingLayoutKey;
+export type LayoutKey = typeof homeLayoutKey;
 
 export function getLastSavedHomeLayout(): Promise<Model | null> {
   const tabLayout = localStorage.getItem(homeLayoutKey);

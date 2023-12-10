@@ -7,7 +7,6 @@ import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
 import {
   getLastSavedHomeLayout,
   homeLayoutKey,
-  pricingLayoutKey,
   saveHomeLayout,
 } from "../../api/Layouts";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
@@ -18,7 +17,7 @@ import { PopoutProperties } from "../../pages/popout/Popout";
 import usePopout from "../../components/popout/hooks/UsePopout";
 import { LayoutComponentKeys } from "../../components/AppLayout";
 import homeLayoutModel from "../../pages/home/HomeLayoutModel";
-import { Actions, Model } from "flexlayout-react";
+import { Model } from "flexlayout-react";
 import { onSelectTab } from "../../state/TabManagementSlice";
 
 type LayoutResetProps = {
@@ -38,7 +37,6 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
 
   function handleResetLayout() {
     if (confirm(confirmMessage)) {
-      dispatch(resetLayout(pricingLayoutKey));
       dispatch(resetLayout(homeLayoutKey));
       toggleDrawer();
     }
@@ -71,12 +69,6 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
   async function loadLayout() {
     const model =
       (await getLastSavedHomeLayout()) ?? Model.fromJson(homeLayoutModel);
-
-    const parent = model.getNodeById("parent-tabset");
-    const childrenCount = parent?.getChildren().length ?? 0;
-    if (childrenCount > 1) {
-      model.doAction(Actions.deleteTab("tab-manager-tab"));
-    }
 
     unmountComponents(model);
     dispatch(setCurrentModel(model.toString()));
