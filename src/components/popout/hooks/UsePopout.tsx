@@ -9,7 +9,6 @@ import { LayoutComponentKeys } from "../../AppLayout";
 import { enqueuePopOuts } from "../../../state/PopupSlice";
 import { BASENAME } from "../../../App";
 import { useAppDispatch, useAppSelector } from "../../../state/Store";
-import { ComponentKeys } from "../../../pages/popout/Popout";
 import { styled } from "@mui/material/styles";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useContext } from "react";
@@ -49,7 +48,7 @@ export const UsePopout = () => {
     }
   }
 
-  async function openPopup(tabId: string, component: ComponentKeys) {
+  async function openPopup(tabId: string, component: LayoutComponentKeys) {
     dispatch(enqueuePopOuts({ tabId: tabId, component }));
 
     await getPermissionAndScreenDetails();

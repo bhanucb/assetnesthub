@@ -66,11 +66,11 @@ const AppLayout = forwardRef(
     const { currentTheme } = useAppSelector((state) => state.theme);
     const lightThemeCss = useMemo(
       () => lightThemeCssRaw.replace(/\/\*#\ssourceMappingURL=.*/gm, ""),
-      [lightThemeCssRaw]
+      []
     );
     const darkThemeCss = useMemo(
       () => darkThemeCssRaw.replace(/\/\*#\ssourceMappingURL=.*/gm, ""),
-      [darkThemeCssRaw]
+      []
     );
 
     return (
