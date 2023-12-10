@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
 
-const SummaryBox: FC = () => {
+const Summary: FC = () => {
   return <Box>Hello Summary</Box>;
 };
 
-export default SummaryBox;
+export default Summary;
