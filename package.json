@@ -17,6 +17,7 @@
     "@mui/lab": "^5.0.0-alpha.99",
     "@mui/material": "^5.10.10",
     "@mui/styled-engine-sc": "^5.10.3",
+    "@mui/x-data-grid": "^6.18.4",
     "@reduxjs/toolkit": "^1.9.5",
     "dayjs": "^1.11.9",
     "echarts": "^5.4.3",

@@ -16,3 +16,7 @@ export function hasPageReloaded() {
   )[0] as PerformanceNavigationTiming;
   return performanceNavigationTiming.type === "reload";
 }
+
+export function convertToCurrency(value: number) {
+  return `$ ${value.toLocaleString()}`;
+}
