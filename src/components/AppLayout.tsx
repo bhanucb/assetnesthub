@@ -9,14 +9,9 @@ import { Layout, TabNode } from "flexlayout-react";
 import lightThemeCssRaw from "flexlayout-react/style/light.css?raw";
 import darkThemeCssRaw from "flexlayout-react/style/dark.css?raw";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import PriceSheetOptions from "../pages/home/pricing/options/PriceSheetOptions";
-import PricingSummary from "../pages/home/pricing/pricingSummary/PricingSummary";
-import TradeBooking from "../pages/home/pricing/tradeBooking/TradeBooking";
-import PriceSheetGrid from "../pages/home/pricing/priceSheet/PriceSheetGrid";
-import SummaryBox from "../pages/home/summary/SummaryBox";
-import WatchBox from "../pages/home/watch/WatchBox";
-import TabManagement from "../pages/home/tabs/TabManagement";
-import PricingLayout from "../pages/home/pricing/PricingLayout";
+import SummaryBox from "../pages/home/SummaryBox";
+import WatchBox from "../pages/home/WatchBox";
+import PricingLayout from "../pages/home/PricingLayout";
 import Unmount from "./popout/Unmount";
 import { useAppSelector } from "../state/Store";
 import LayoutPopout from "./popout/LayoutPopout";
@@ -35,29 +30,16 @@ export type LayoutAction =
   | typeof MaximizeToggleAction;
 
 export enum LayoutComponentKeys {
-  pricingSummary = "pricingSummary",
-  tradeBooking = "tradeBooking",
-  priceSheet = "priceSheet",
-  priceSheetOptions = "priceSheetOptions",
   summaryBox = "summaryBox",
   watchBox = "watchBox",
-  tabManager = "tabManager",
   pricingLayout = "pricingLayout",
-  discountGrid = "discountGrid",
-  tierGrid = "tierGrid",
-  clientGrid = "clientGrid",
   unmount = "unmount",
   error = "error",
 }
 
 const layoutComponents: Map<LayoutComponentKeys, ReactElement> = new Map([
-  [LayoutComponentKeys.pricingSummary, <PricingSummary />],
-  [LayoutComponentKeys.tradeBooking, <TradeBooking />],
-  [LayoutComponentKeys.priceSheet, <PriceSheetGrid />],
-  [LayoutComponentKeys.priceSheetOptions, <PriceSheetOptions />],
   [LayoutComponentKeys.summaryBox, <SummaryBox />],
   [LayoutComponentKeys.watchBox, <WatchBox />],
-  [LayoutComponentKeys.tabManager, <TabManagement />],
   [LayoutComponentKeys.pricingLayout, <PricingLayout />],
   [LayoutComponentKeys.error, <div>Error Loading Component</div>],
 ]);

@@ -18,9 +18,7 @@ import {
 } from "redux-state-sync";
 import themeReducer from "./ThemeSlice";
 import layoutReducer from "./LayoutSlice";
-import pricingSheetReducer from "./PricingSheetSlice";
 import tabManagementReducer from "./TabManagementSlice";
-import tradeBookingReducer from "./TradeBookingSlice";
 
 const persistReducerConfig = {
   key: "root",
@@ -33,9 +31,7 @@ const rootReducer = combineReducers({
   popouts: popoutReducer,
   theme: themeReducer,
   layout: layoutReducer,
-  pricingSheet: pricingSheetReducer,
   tabManagement: tabManagementReducer,
-  tradeBooking: tradeBookingReducer,
 });
 
 const persistedReducer = persistReducer(persistReducerConfig, rootReducer);
@@ -60,7 +56,7 @@ export const store = configureStore({
 
 initMessageListener(store);
 
-export let persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;

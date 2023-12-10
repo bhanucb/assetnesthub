@@ -27,19 +27,9 @@ export const tabManagementSlice = createSlice({
     ) => {
       state.selectedTabId = action.payload.tabId;
     },
-    onOpenTab: (state, action: PayloadAction<TabEvent>) => {
-      state.lastOpenedTab = action.payload;
-    },
-    onEditTab: (
-      state,
-      action: PayloadAction<{ tabId: string | undefined }>
-    ) => {
-      state.tabIdOnEdit = action.payload.tabId;
-    },
   },
 });
 
-export const { onSelectTab, onOpenTab, onEditTab } =
-  tabManagementSlice.actions;
+export const { onSelectTab } = tabManagementSlice.actions;
 
 export default tabManagementSlice.reducer;
