@@ -24,7 +24,7 @@ const persistReducerConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["pricingSheet", "tabManagement", "layout", "tradeBooking"],
+  blacklist: ["tabManagement", "layout"],
 };
 
 const rootReducer = combineReducers({
