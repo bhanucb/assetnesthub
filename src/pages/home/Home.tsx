@@ -1,7 +1,19 @@
-import {createRef, useEffect, useRef, useState} from "react";
-import {styled} from "@mui/material/styles";
-import {Action, BorderNode, IJsonModel, ITabSetRenderValues, Layout, Model, TabSetNode} from "flexlayout-react";
-import {getLastSavedHomeLayout, homeLayoutKey, saveHomeLayout,} from "../../api/Layouts";
+import { createRef, useEffect, useRef, useState } from "react";
+import { styled } from "@mui/material/styles";
+import {
+  Action,
+  BorderNode,
+  IJsonModel,
+  ITabSetRenderValues,
+  Layout,
+  Model,
+  TabSetNode,
+} from "flexlayout-react";
+import {
+  getLastSavedHomeLayout,
+  homeLayoutKey,
+  saveHomeLayout,
+} from "../../api/Layouts";
 import AppLayout, {
   AddNodeAction,
   DeleteTabAction,
@@ -10,12 +22,12 @@ import AppLayout, {
   SelectTabAction,
 } from "../../components/AppLayout";
 import homeLayoutModel from "./HomeLayoutModel";
-import {useAppDispatch, useAppSelector} from "../../state/Store";
-import {onSelectTab} from "../../state/TabManagementSlice";
-import {NAVIGATION_BAR_HEIGHT} from "../../navigation/Constants";
-import {clearPopOutProperties} from "../../state/PopupSlice";
-import {setCurrentModel} from "../../state/LayoutSlice";
+import { useAppDispatch, useAppSelector } from "../../state/Store";
+import { onSelectTab } from "../../state/TabManagementSlice";
+import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
+import { clearPopOutProperties } from "../../state/PopupSlice";
 import usePopout from "../../components/popout/hooks/UsePopout";
+import { setCurrentModel } from "../../state/LayoutSlice";
 
 const LayoutContainer = styled("div")`
   position: relative;
@@ -29,8 +41,8 @@ function Home() {
   );
   const layoutAction = useRef<LayoutAction>();
   const { currentModel, lastReset } = useAppSelector((state) => state.layout);
-  const dispatch = useAppDispatch();
   const { handleRenderTabSet: parentHandleRenderTabSet } = usePopout();
+  const dispatch = useAppDispatch();
 
   // update model in component when the layout model change in the global state
   useEffect(() => {
@@ -59,60 +71,24 @@ function Home() {
   useEffect(() => {
     if (lastReset?.layoutKey !== homeLayoutKey) return;
 
+    // reopen price sheets that were already open before the layout was reset
     const baseModel = Model.fromJson(homeLayoutModel);
+
     setLayoutModel(baseModel);
     saveHomeLayout(baseModel).then();
     dispatch(clearPopOutProperties());
   }, [lastReset]);
 
-  // useEffect(() => {
-  //   if (lastOpenedTab === undefined) return;
-  //
-  //   const { tabName } = lastOpenedTab;
-  //
-  //   const tabManagerTabParent = layoutModel
-  //     .getNodeById("tab-manager-tab")
-  //     ?.getParent();
-  //
-  //   if (tabManagerTabParent === undefined) return;
-  //
-  //   const layoutNodeIds: Array<string> = [];
-  //   getAllLayoutNodeIds(tabManagerTabParent, layoutNodeIds);
-  //   const priceSheetTabs = layoutNodeIds.filter((node) =>
-  //     node.includes(priceSheetIdPrefix)
-  //   );
-  //
-  //   const addPriceSheetTabToTabSet = (tabSetId: string, tabName: string) => {
-  //     layoutRef.current?.addTabToTabSet(tabSetId, getPriceSheetNode(tabName));
-  //     layoutModel.doAction(Actions.deleteTab("tab-manager-tab"));
-  //   };
-  //
-  //   if (priceSheetTabs.length === 0) {
-  //     addPriceSheetTabToTabSet(tabManagerTabParent.getId(), tabName);
-  //   } else {
-  //     const lastPriceSheetTab = priceSheetTabs[priceSheetTabs.length - 1];
-  //     const parentOfLastPriceSheetTab = layoutModel
-  //       .getNodeById(lastPriceSheetTab)
-  //       ?.getParent()
-  //       ?.getId();
-  //
-  //     if (parentOfLastPriceSheetTab === undefined) return;
-  //
-  //     addPriceSheetTabToTabSet(parentOfLastPriceSheetTab, tabName);
-  //   }
-  // }, [lastOpenedTab]);
-
   function handleLayoutAction(action: Action) {
     layoutAction.current = action.type as LayoutAction;
-
-    if (action.type === SelectTabAction) {
-      const { tabNode = undefined } = action.data;
-      if (tabNode !== undefined) {
-        dispatch(onSelectTab({ tabId: tabNode }));
-      }
-    }
-
     return action;
+  }
+
+  function handleRenderTabSet(
+    node: TabSetNode | BorderNode,
+    renderValues: ITabSetRenderValues
+  ) {
+    parentHandleRenderTabSet(node, renderValues);
   }
 
   async function handleModelChange(model: Model) {
@@ -128,13 +104,6 @@ function Home() {
     ) {
       dispatch(setCurrentModel(model.toString()));
     }
-  }
-
-  function handleRenderTabSet(
-    node: TabSetNode | BorderNode,
-    renderValues: ITabSetRenderValues
-  ) {
-    parentHandleRenderTabSet(node, renderValues);
   }
 
   return (
