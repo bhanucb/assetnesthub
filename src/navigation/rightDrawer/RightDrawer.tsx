@@ -10,7 +10,6 @@ import { ThemeSection } from "./ThemeSection";
 import LayoutSection from "./LayoutSection";
 import { BASENAME } from "../../App";
 import { removeSlashes } from "../../utils/Misc";
-import LogoutSection from "./LogoutSection";
 
 const DrawerHeader = styled(Box)`
   display: flex;
@@ -72,7 +71,6 @@ const RightDrawer: FC<RightDrawerProps> = (props) => {
         <ThemeSection />
         <PageSpecificSections />
       </Box>
-      <LogoutSection />
     </Drawer>
   );
 };

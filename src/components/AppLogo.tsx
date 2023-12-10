@@ -35,7 +35,7 @@ const StyledLogo = styled(Box)`
 const AppLogo: FC = () => {
   return (
     <StyledLogo>
-      <div className="logo">FundIQ</div>
+      <div className="logo">AssetNest Hub</div>
     </StyledLogo>
   );
 };
