@@ -14,11 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../state/Store";
 import { resetLayout, setCurrentModel } from "../../state/LayoutSlice";
 import Stack from "@mui/material/Stack";
 import { updatePopOutProperties } from "../../state/PopupSlice";
-import {
-  ComponentKeys,
-  PopoutComponentKeys,
-  PopoutProperties,
-} from "../../pages/popout/Popout";
+import { PopoutProperties } from "../../pages/popout/Popout";
 import usePopout from "../../components/popout/hooks/UsePopout";
 import { LayoutComponentKeys } from "../../components/AppLayout";
 import homeLayoutModel from "../../pages/home/HomeLayoutModel";
@@ -50,7 +46,7 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
 
   async function handleSaveLayout() {
     const properties: Array<PopoutProperties> = [];
-    for (let popout of popOuts) {
+    for (const popout of popOuts) {
       const ref = window.open("", popout.tabId);
       if (ref === null) continue;
 
@@ -90,12 +86,12 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
       })
     );
 
-    for (let props of popoutProperties) {
+    for (const props of popoutProperties) {
       const { tabId } = props;
-      let component: ComponentKeys;
+      let component: LayoutComponentKeys;
 
-      if (tabId in PopoutComponentKeys) {
-        component = tabId as PopoutComponentKeys;
+      if (tabId in LayoutComponentKeys) {
+        component = tabId as LayoutComponentKeys;
       } else {
         const node = model.getNodeById(tabId);
         if (node === undefined) return;

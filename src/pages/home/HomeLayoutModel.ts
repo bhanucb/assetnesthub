@@ -1,4 +1,5 @@
 import { IJsonModel } from "flexlayout-react";
+import { LayoutComponentKeys } from "../../components/AppLayout";
 
 const model: IJsonModel = {
   global: {},
@@ -20,7 +21,7 @@ const model: IJsonModel = {
                     id: "summaryBox",
                     type: "tab",
                     name: "Summary",
-                    component: "summaryBox",
+                    component: LayoutComponentKeys.summaryBox,
                     enableClose: false,
                   },
                 ],
@@ -33,7 +34,7 @@ const model: IJsonModel = {
                     id: "watchBox",
                     type: "tab",
                     name: "Watch",
-                    component: "watchBox",
+                    component: LayoutComponentKeys.watchBox,
                     enableClose: false,
                   },
                 ],
@@ -45,10 +46,10 @@ const model: IJsonModel = {
             type: "tabset",
             children: [
               {
-                id: "tab-manager-tab",
+                id: "pricingLayout",
                 type: "tab",
                 name: "New Tab",
-                component: "tabManager",
+                component: LayoutComponentKeys.pricingLayout,
               },
             ],
           },

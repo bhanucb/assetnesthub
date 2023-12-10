@@ -1,16 +1,23 @@
-import {FC, ReactElement, useEffect, useRef, useState} from "react";
-import {useBeforeUnload, useParams} from "react-router-dom";
-import {getLayoutComponent, LayoutComponentKeys,} from "../../components/AppLayout";
-import {Paper} from "@mui/material";
-import {styled} from "@mui/material/styles";
-import {useAppDispatch, useAppSelector} from "../../state/Store";
-import {dequeuePopOuts, dockPopOut, enqueuePopOuts,} from "../../state/PopupSlice";
-import {appCloseKey} from "../../components/popout/AppPopout";
-import {Subscription, timer} from "rxjs";
+import { FC, ReactElement, useEffect, useRef, useState } from "react";
+import { useBeforeUnload, useParams } from "react-router-dom";
+import {
+  getLayoutComponent,
+  LayoutComponentKeys,
+} from "../../components/AppLayout";
+import { Paper } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { useAppDispatch, useAppSelector } from "../../state/Store";
+import {
+  dequeuePopOuts,
+  dockPopOut,
+  enqueuePopOuts,
+} from "../../state/PopupSlice";
+import { appCloseKey } from "../../components/popout/AppPopout";
+import { Subscription, timer } from "rxjs";
 
 export type PopoutState = {
   tabId: string;
-  component: ComponentKeys;
+  component: LayoutComponentKeys;
 };
 
 export type PopoutsState = Array<PopoutState>;
@@ -30,26 +37,26 @@ const Container = styled(Paper)`
 
 const POPOUT_CLOSE_TIMEOUT = 2000;
 
-export enum PopoutComponentKeys {
-  dagChart = "dagChart",
-}
+// export enum PopoutComponentKeys {
+//   dagChart = "dagChart",
+// }
+//
+// export type ComponentKeys = LayoutComponentKeys | PopoutComponentKeys;
+//
+// const popoutComponents: Map<PopoutComponentKeys, ReactElement> = new Map([
+//   [PopoutComponentKeys.dagChart, <></>],
+// ]);
+//
+// function isPopoutComponentKey(key: ComponentKeys): key is PopoutComponentKeys {
+//   return key in PopoutComponentKeys;
+// }
 
-export type ComponentKeys = LayoutComponentKeys | PopoutComponentKeys;
-
-const popoutComponents: Map<PopoutComponentKeys, ReactElement> = new Map([
-  [PopoutComponentKeys.dagChart, <></>],
-]);
-
-function isPopoutComponentKey(key: ComponentKeys): key is PopoutComponentKeys {
-  return key in PopoutComponentKeys;
-}
-
-const getComponent = (key: ComponentKeys): ReactElement => {
-  if (isPopoutComponentKey(key)) {
-    return popoutComponents.get(key) ?? <></>;
-  } else {
-    return getLayoutComponent(key);
-  }
+const getComponent = (key: LayoutComponentKeys): ReactElement => {
+  // if (isPopoutComponentKey(key)) {
+  //   return popoutComponents.get(key) ?? <></>;
+  // } else {
+  return getLayoutComponent(key);
+  // }
 };
 
 const Popout: FC = () => {
@@ -57,7 +64,7 @@ const Popout: FC = () => {
   const popouts = useAppSelector((state) => state.popouts.popOuts);
   const popout = popouts.filter((p) => p.tabId === currentTabId)?.[0];
   const tabId = useRef(popout?.tabId);
-  const [component, setComponent] = useState<ComponentKeys>(
+  const [component, setComponent] = useState<LayoutComponentKeys>(
     popout?.component ?? LayoutComponentKeys.error
   );
   const dispatch = useAppDispatch();
@@ -71,13 +78,9 @@ const Popout: FC = () => {
     }
 
     if (tabId !== undefined) {
-      if (tabId.current in PopoutComponentKeys) {
-        dispatch(dequeuePopOuts(tabId.current));
-      } else {
-        dispatch(
-          dockPopOut({ tabId: tabId.current, userInitiatedAction: false })
-        );
-      }
+      dispatch(
+        dockPopOut({ tabId: tabId.current, userInitiatedAction: false })
+      );
     }
   });
 
@@ -93,13 +96,13 @@ const Popout: FC = () => {
     } else {
       // popout was only refreshed
       tabId.current = existingTabId;
-      setComponent(existingComponent as ComponentKeys);
+      setComponent(existingComponent as LayoutComponentKeys);
 
       // re-enqueue popout because it was taken out of the queue when the page was previously refreshed
       dispatch(
         enqueuePopOuts({
           tabId: existingTabId,
-          component: existingComponent as ComponentKeys,
+          component: existingComponent as LayoutComponentKeys,
         })
       );
     }
