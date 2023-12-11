@@ -24,7 +24,7 @@ const model: IJsonModel = {
                 children: [
                   {
                     type: "tab",
-                    id: "#48c40520-408c-484f-a391-dad8bb5f7b76",
+                    id: LayoutComponentKeys.summary,
                     name: "Summary",
                     component: LayoutComponentKeys.summary,
                   },
@@ -37,7 +37,7 @@ const model: IJsonModel = {
                 children: [
                   {
                     type: "tab",
-                    id: "#7757b616-2e0e-4eec-be45-73067ec1f2c6",
+                    id: LayoutComponentKeys.invAmountByPropType,
                     name: "Investment Amount by Property Type",
                     component: LayoutComponentKeys.invAmountByPropType,
                   },
@@ -57,7 +57,7 @@ const model: IJsonModel = {
                 children: [
                   {
                     type: "tab",
-                    id: "#6867dea6-f2ae-44f5-a4e8-556988f3927e",
+                    id: LayoutComponentKeys.propTypeBreakdown,
                     name: "Property Type Breakdown",
                     component: LayoutComponentKeys.propTypeBreakdown,
                   },
@@ -70,7 +70,7 @@ const model: IJsonModel = {
                 children: [
                   {
                     type: "tab",
-                    id: "#44df6472-c02a-437c-802f-e76cff264c8e",
+                    id: LayoutComponentKeys.trendOfTotalAllocationAmount,
                     name: 'Trend of "Total Allocated Amount"',
                     component: LayoutComponentKeys.trendOfTotalAllocationAmount,
                   },
@@ -83,7 +83,7 @@ const model: IJsonModel = {
                 children: [
                   {
                     type: "tab",
-                    id: "#39253790-0777-495d-a5e5-4aa8db2cb3a5",
+                    id: LayoutComponentKeys.declinedDealsBreakdown,
                     name: "Declined Deals Breakdown",
                     component: LayoutComponentKeys.declinedDealsBreakdown,
                   },
