@@ -9,7 +9,7 @@ export interface PropertyData {
   maxAmount: number;
 }
 
-const generateRealEstateData = (
+const generateFakeRealEstateData = (
   propertyTypes: Array<string>
 ): PropertyData[] => {
   const fakeData: PropertyData[] = [];
@@ -47,6 +47,6 @@ export function getRealEstateData(): Promise<Array<PropertyData>> {
     "Retail",
   ];
   return new Promise((resolve) =>
-    setTimeout(() => resolve(generateRealEstateData(propertyTypes)), 445)
+    setTimeout(() => resolve(generateFakeRealEstateData(propertyTypes)), 445)
   );
 }

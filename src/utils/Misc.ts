@@ -17,6 +17,14 @@ export function hasPageReloaded() {
   return performanceNavigationTiming.type === "reload";
 }
 
-export function convertToCurrency(value: number) {
+export function formatCurrency(value: number) {
+  if (value === null || value === undefined) return value;
+
   return `$ ${value.toLocaleString()}`;
+}
+
+export function formatPercentage(value: number) {
+  if (value === null || value === undefined) return value;
+
+  return `${value}%`;
 }

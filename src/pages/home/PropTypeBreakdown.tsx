@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { getRealEstateData, PropertyData } from "../../api/RealEstateData";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { convertToCurrency } from "../../utils/Misc";
+import { getRealEstateData, PropertyData } from "../../api/RealEstateData";
+import { formatCurrency } from "../../utils/Misc";
 
 const StyledGridContainer = styled(Box)`
   width: 100%;
@@ -14,10 +14,10 @@ const PropTypeBreakdown: FC = () => {
 
   useEffect(() => {
     getRealEstateData().then((data) => {
-      const sortedData = data.sort((a, b) =>
-        a.propertyType.localeCompare(b.propertyType)
-      );
-      setData(sortedData);
+      // const sortedData = data.sort((a, b) =>
+      //   a.dealName.localeCompare(b.dealName)
+      // );
+      setData(data);
     });
   }, []);
 
@@ -28,28 +28,28 @@ const PropTypeBreakdown: FC = () => {
       headerName: "Min Amount",
       type: "number",
       flex: 1,
-      valueGetter: (params) => convertToCurrency(params.value),
+      valueGetter: (params) => formatCurrency(params.value),
     },
     {
       field: "currentInvested",
       headerName: "Current Invested",
       type: "number",
       flex: 1,
-      valueGetter: (params) => convertToCurrency(params.value),
+      valueGetter: (params) => formatCurrency(params.value),
     },
     {
       field: "totalAllocated",
       headerName: "Total Allocated",
       type: "number",
       flex: 1,
-      valueGetter: (params) => convertToCurrency(params.value),
+      valueGetter: (params) => formatCurrency(params.value),
     },
     {
       field: "maxAmount",
       headerName: "Max Amount",
       type: "number",
       flex: 1,
-      valueGetter: (params) => convertToCurrency(params.value),
+      valueGetter: (params) => formatCurrency(params.value),
     },
   ];
 
