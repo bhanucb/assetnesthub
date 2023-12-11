@@ -35,6 +35,25 @@ const StyledChartContainer = styled(ResponsiveContainer)`
   }
 `;
 
+function ToolTopFormatter({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) {
+  if (active && payload && payload.length) {
+    return (
+      <Paper elevation={0}>
+        <Box p={1} className="tooltip">
+          <Box>{dayjs(label).format("YYYY-MM-DD")}</Box>
+          <Box>{formatCurrency(payload[0].value ?? 0)}</Box>
+        </Box>
+      </Paper>
+    );
+  }
+
+  return null;
+}
+
 const TrendOfTotalAllocatedAmount: FC = () => {
   const [data, setDate] = useState<Array<RealEstateAllocatedAmount>>([]);
 
@@ -45,25 +64,6 @@ const TrendOfTotalAllocatedAmount: FC = () => {
   const formatDate = (date: string): string => {
     return dayjs(date).format("YY MMM");
   };
-
-  function ToolTopFormatter({
-    active,
-    payload,
-    label,
-  }: TooltipProps<number, string>) {
-    if (active && payload && payload.length) {
-      return (
-        <Paper elevation={0}>
-          <Box p={1} className="tooltip">
-            <Box>{dayjs(label).format("YYYY-MM-DD")}</Box>
-            <Box>{formatCurrency(payload[0].value ?? 0)}</Box>
-          </Box>
-        </Paper>
-      );
-    }
-
-    return null;
-  }
 
   return (
     <StyledChartContainer>
