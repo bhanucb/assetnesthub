@@ -17,8 +17,13 @@ export function hasPageReloaded() {
   return performanceNavigationTiming.type === "reload";
 }
 
-export function formatCurrency(value: number) {
+export function formatCurrency(value: number, comapct?: true) {
   if (value === null || value === undefined) return value;
+
+  if (comapct) {
+    const formatter = Intl.NumberFormat("en", { notation: "compact" });
+    return `$ ${formatter.format(value)}`;
+  }
 
   return `$ ${value.toLocaleString()}`;
 }
