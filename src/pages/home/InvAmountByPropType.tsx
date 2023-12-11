@@ -18,11 +18,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 const StyledChartContainer = styled(ResponsiveContainer)`
-  width: 100%;
+  //width: 100%;
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: center;
+
+  .chart {
+    height: 95% !important;
+  }
 
   .tooltip {
     display: flex;
@@ -77,6 +81,7 @@ const InvAmountByPropType: FC = () => {
   return (
     <StyledChartContainer>
       <BarChart
+        className="chart"
         data={data}
         margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
       >

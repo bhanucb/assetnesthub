@@ -27,6 +27,10 @@ const StyledChartContainer = styled(ResponsiveContainer)`
   justify-content: center;
   align-items: center;
 
+  .chart {
+    height: 95% !important;
+  }
+
   .tooltip {
     display: flex;
     flex-direction: column;
@@ -68,6 +72,7 @@ const TrendOfTotalAllocatedAmount: FC = () => {
   return (
     <StyledChartContainer>
       <LineChart
+        className="chart"
         data={data}
         margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
       >
