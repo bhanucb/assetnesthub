@@ -5,14 +5,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import RightDrawer, { RightDrawerApi } from "./rightDrawer/RightDrawer";
-import {
-  Button,
-  Menu,
-  MenuItem,
-  SxProps,
-  Theme,
-  useTheme,
-} from "@mui/material";
+import { Button, Menu, MenuItem, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -90,34 +83,11 @@ function NavigationBar() {
     );
   };
 
-  const NavTitle: FC<{ responsive?: true }> = ({ responsive }) => {
-    let sx: SxProps<Theme> = {
-      mr: 2,
-      display: { xs: "none", md: "flex" },
-      letterSpacing: ".1rem",
-      color: "inherit",
-      textDecoration: "none",
-    };
-    if (responsive) {
-      sx = {
-        ...sx,
-        flexGrow: 1,
-        display: { xs: "flex", md: "none" },
-      };
-    }
-
+  const NavTitle: FC = () => {
     return (
-      <>
-        <Box
-          sx={
-            responsive
-              ? { display: { xs: "flex", md: "none" }, mr: 1 }
-              : { display: { xs: "none", md: "flex" }, mr: 1 }
-          }
-        >
-          <AppLogo />
-        </Box>
-      </>
+      <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
+        <AppLogo />
+      </Box>
     );
   };
 
@@ -169,7 +139,6 @@ function NavigationBar() {
         <Toolbar>
           <NavTitle />
           <ResponsiveMenu />
-          <NavTitle responsive />
           <NavLinks />
           <IconButton
             size="large"
