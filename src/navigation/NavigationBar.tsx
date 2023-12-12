@@ -5,23 +5,42 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import RightDrawer, { RightDrawerApi } from "./rightDrawer/RightDrawer";
-import {
-  Button,
-  Menu,
-  MenuItem,
-  SxProps,
-  Theme,
-} from "@mui/material";
+import { Button, Menu, MenuItem, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { NAVBAR_LINKS } from "./NavigationRoutes";
-import AppLogo from "../components/AppLogo";
+import AppLogo from "../components/logo/AppLogo";
+import { styled } from "@mui/material/styles";
 
+const StyledAppBar = styled(Box)`
+  .light {
+    background: rgb(35, 46, 93);
+    background: linear-gradient(
+      90deg,
+      rgba(35, 46, 93, 1) 0%,
+      rgba(65, 74, 113, 1) 11%,
+      rgba(67, 76, 112, 1) 100%
+    );
+  }
+
+  .dark {
+    background: rgb(14, 14, 14);
+    background: linear-gradient(
+      90deg,
+      rgba(14, 14, 14, 1) 0%,
+      rgba(51, 51, 51, 1) 20%,
+      rgba(51, 51, 51, 1) 100%
+    );
+  }
+`;
 function NavigationBar() {
   const [rightDrawerApi, setRightDrawerApi] = useState<RightDrawerApi>();
   const navigate = useNavigate();
+  const {
+    palette: { mode },
+  } = useTheme();
 
   function handleRightDrawerReady({ api }: { api: RightDrawerApi }) {
     setRightDrawerApi(api);
@@ -34,7 +53,7 @@ function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  
+
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -64,34 +83,11 @@ function NavigationBar() {
     );
   };
 
-  const NavTitle: FC<{ responsive?: true }> = ({ responsive }) => {
-    let sx: SxProps<Theme> = {
-      mr: 2,
-      display: { xs: "none", md: "flex" },
-      letterSpacing: ".1rem",
-      color: "inherit",
-      textDecoration: "none",
-    };
-    if (responsive) {
-      sx = {
-        ...sx,
-        flexGrow: 1,
-        display: { xs: "flex", md: "none" },
-      };
-    }
-
+  const NavTitle: FC = () => {
     return (
-      <>
-        <Box
-          sx={
-            responsive
-              ? { display: { xs: "flex", md: "none" }, mr: 1 }
-              : { display: { xs: "none", md: "flex" }, mr: 1 }
-          }
-        >
-          <AppLogo />
-        </Box>
-      </>
+      <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
+        <AppLogo />
+      </Box>
     );
   };
 
@@ -138,27 +134,26 @@ function NavigationBar() {
   };
 
   return (
-    <AppBar
-      position="static"
-    >
-      <Toolbar>
-        <NavTitle />
-        <ResponsiveMenu />
-        <NavTitle responsive />
-        <NavLinks />
-        <IconButton
-          size="large"
-          edge="end"
-          color="inherit"
-          aria-label="settings"
-          sx={{ ml: 2 }}
-          onClick={handleToggleDrawer}
-        >
-          <SettingsIcon />
-        </IconButton>
-        <RightDrawer onReady={handleRightDrawerReady} />
-      </Toolbar>
-    </AppBar>
+    <StyledAppBar>
+      <AppBar position="static" className={mode}>
+        <Toolbar>
+          <NavTitle />
+          <ResponsiveMenu />
+          <NavLinks />
+          <IconButton
+            size="large"
+            edge="end"
+            color="inherit"
+            aria-label="settings"
+            sx={{ ml: 2 }}
+            onClick={handleToggleDrawer}
+          >
+            <SettingsIcon />
+          </IconButton>
+          <RightDrawer onReady={handleRightDrawerReady} />
+        </Toolbar>
+      </AppBar>
+    </StyledAppBar>
   );
 }
 

@@ -9,12 +9,15 @@ import { Layout, TabNode } from "flexlayout-react";
 import lightThemeCssRaw from "flexlayout-react/style/light.css?raw";
 import darkThemeCssRaw from "flexlayout-react/style/dark.css?raw";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import SummaryBox from "../pages/home/SummaryBox";
-import WatchBox from "../pages/home/WatchBox";
+import Summary from "../pages/home/Summary";
+import InvAmountByPropType from "../pages/home/InvAmountByPropType";
 import PricingLayout from "../pages/home/PricingLayout";
 import Unmount from "./popout/Unmount";
 import { useAppSelector } from "../state/Store";
 import LayoutPopout from "./popout/LayoutPopout";
+import PropTypeBreakdown from "../pages/home/PropTypeBreakdown";
+import TrendOfTotalAllocatedAmount from "../pages/home/TrendOfTotalAllocatedAmount";
+import DeclinedDealsBreakdown from "../pages/home/DeclinedDealsBreakdown";
 
 export const MoveNodeAction = "FlexLayout_MoveNode";
 export const SelectTabAction = "FlexLayout_SelectTab";
@@ -30,16 +33,25 @@ export type LayoutAction =
   | typeof MaximizeToggleAction;
 
 export enum LayoutComponentKeys {
-  summaryBox = "summaryBox",
-  watchBox = "watchBox",
+  summary = "summary",
+  invAmountByPropType = "invAmountByPropType",
+  propTypeBreakdown = "propTypeBreakdown",
+  trendOfTotalAllocationAmount = "trendOfTotalAllocationAmount",
+  declinedDealsBreakdown = "declinedDealsBreakdown",
   pricingLayout = "pricingLayout",
   unmount = "unmount",
   error = "error",
 }
 
 const layoutComponents: Map<LayoutComponentKeys, ReactElement> = new Map([
-  [LayoutComponentKeys.summaryBox, <SummaryBox />],
-  [LayoutComponentKeys.watchBox, <WatchBox />],
+  [LayoutComponentKeys.summary, <Summary />],
+  [LayoutComponentKeys.invAmountByPropType, <InvAmountByPropType />],
+  [LayoutComponentKeys.propTypeBreakdown, <PropTypeBreakdown />],
+  [
+    LayoutComponentKeys.trendOfTotalAllocationAmount,
+    <TrendOfTotalAllocatedAmount />,
+  ],
+  [LayoutComponentKeys.declinedDealsBreakdown, <DeclinedDealsBreakdown />],
   [LayoutComponentKeys.pricingLayout, <PricingLayout />],
   [LayoutComponentKeys.error, <div>Error Loading Component</div>],
 ]);
