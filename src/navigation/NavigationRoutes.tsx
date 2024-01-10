@@ -11,7 +11,7 @@ export type IpaRoute = {
 
 export const NAVBAR_LINKS: Array<IpaRoute> = [
   { path: "/", name: "Home" },
-  { path: "/test", name: "Test" },
+  { path: "/popout", name: "Test" },
 ];
 
 function PageWithNavigationBar() {
@@ -30,6 +30,7 @@ function NavigationRoutes() {
         <Route path="/" element={<Home />} />
       </Route>
       <Route path="/test/:tabId" element={<Popout />} />
+      <Route path="/popout" element={<div>TEST</div>} />
       {/* <Route path="/popout/:tabId" element={<Popout />} /> */}
       {/* <Route path="/popout/:tabId" element={<Popout />} /> */}
       <Route path="*" element={<NotFound />} />
