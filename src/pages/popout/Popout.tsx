@@ -1,13 +1,12 @@
 import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { FC, ReactElement, useEffect, useRef, useState } from "react";
+import { FC, ReactElement, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   LayoutComponentKeys,
   getLayoutComponent,
 } from "../../components/AppLayout";
-import { enqueuePopOuts } from "../../state/PopupSlice";
-import { useAppDispatch, useAppSelector } from "../../state/Store";
+import { useAppSelector } from "../../state/Store";
 
 export type PopoutState = {
   tabId: string;
@@ -57,11 +56,11 @@ const Popout: FC = () => {
   const { tabId: currentTabId } = useParams();
   const popouts = useAppSelector((state) => state.popouts.popOuts);
   const popout = popouts.filter((p) => p.tabId === currentTabId)?.[0];
-  const tabId = useRef(popout?.tabId);
-  const [component, setComponent] = useState<LayoutComponentKeys>(
+  // const tabId = useRef(popout?.tabId);
+  const [component] = useState<LayoutComponentKeys>(
     popout?.component ?? LayoutComponentKeys.error
   );
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   // useBeforeUnload(() => {
   //   // when the popout closes on a timer due to app close, it will trigger useBeforeUnload on next page load
@@ -78,29 +77,29 @@ const Popout: FC = () => {
   //   }
   // });
 
-  useEffect(() => {
-    // retrieve tabId and component from session storage - if the popout was refreshed
-    // retrieve tabId and component from local storage - if the popout is opened for the first time
-    const existingTabId = sessionStorage.getItem("tabId");
-    const existingComponent = sessionStorage.getItem("component");
-    if (existingTabId === null || existingComponent === null) {
-      // popout is opened for the first time
-      sessionStorage.setItem("tabId", tabId.current);
-      sessionStorage.setItem("component", component);
-    } else {
-      // popout was only refreshed
-      tabId.current = existingTabId;
-      setComponent(existingComponent as LayoutComponentKeys);
+  // useEffect(() => {
+  //   // retrieve tabId and component from session storage - if the popout was refreshed
+  //   // retrieve tabId and component from local storage - if the popout is opened for the first time
+  //   const existingTabId = sessionStorage.getItem("tabId");
+  //   const existingComponent = sessionStorage.getItem("component");
+  //   if (existingTabId === null || existingComponent === null) {
+  //     // popout is opened for the first time
+  //     sessionStorage.setItem("tabId", tabId.current);
+  //     sessionStorage.setItem("component", component);
+  //   } else {
+  //     // popout was only refreshed
+  //     tabId.current = existingTabId;
+  //     setComponent(existingComponent as LayoutComponentKeys);
 
-      // re-enqueue popout because it was taken out of the queue when the page was previously refreshed
-      dispatch(
-        enqueuePopOuts({
-          tabId: existingTabId,
-          component: existingComponent as LayoutComponentKeys,
-        })
-      );
-    }
-  }, []);
+  //     // re-enqueue popout because it was taken out of the queue when the page was previously refreshed
+  //     dispatch(
+  //       enqueuePopOuts({
+  //         tabId: existingTabId,
+  //         component: existingComponent as LayoutComponentKeys,
+  //       })
+  //     );
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   let timerSub: Subscription;
