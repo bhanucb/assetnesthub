@@ -20,9 +20,7 @@ const ThemedOpenInNewIcon = styled(OpenInNewIcon)`
 `;
 
 export const UsePopout = () => {
-  const { popoutProperties, popOuts } = useAppSelector(
-    (state) => state.popouts
-  );
+  const { popOuts } = useAppSelector((state) => state.popouts);
   const { storeWindowRef } = useContext(PopoutContext);
   const dispatch = useAppDispatch();
 
@@ -52,16 +50,16 @@ export const UsePopout = () => {
 
     await getPermissionAndScreenDetails();
 
-    let features = "popout";
-    const storedPositionForTab = popoutProperties.find(
-      (p) => p.tabId === tabId
-    );
+    // let features = "popout";
+    // const storedPositionForTab = popoutProperties.find(
+    //   (p) => p.tabId === tabId
+    // );
 
-    if (storedPositionForTab !== undefined) {
-      const { screenX, screenY, innerHeight, innerWidth } =
-        storedPositionForTab;
-      features = `popout,innerHeight=${innerHeight},innerWidth=${innerWidth},screenX=${screenX},screenY=${screenY}`;
-    }
+    // if (storedPositionForTab !== undefined) {
+    //   const { screenX, screenY, innerHeight, innerWidth } =
+    //     storedPositionForTab;
+    //   features = `popout,innerHeight=${innerHeight},innerWidth=${innerWidth},screenX=${screenX},screenY=${screenY}`;
+    // }
 
     const url = `/popout/${tabId}`;
     const windowRef = window.open(url, "_self");
