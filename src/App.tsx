@@ -7,7 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider as ReduxProvider } from "react-redux";
 import AppPopout from "./components/popout/AppPopout";
 
-export const BASENAME = "/";
+export const BASENAME = "/asset-nest-hub";
 
 const Loader: FC = () => {
   return <div>Loading...</div>;
