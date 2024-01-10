@@ -2,4 +2,3 @@
     from = "/popout*"
     to = "/"
     status = 301
-    force = true
