@@ -1,3 +1,4 @@
+import { createRef, useEffect, useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Action,
@@ -8,7 +9,6 @@ import {
   Model,
   TabSetNode,
 } from "flexlayout-react";
-import { createRef, useEffect, useRef, useState } from "react";
 import {
   getLastSavedHomeLayout,
   homeLayoutKey,
@@ -21,13 +21,13 @@ import AppLayout, {
   MoveNodeAction,
   SelectTabAction,
 } from "../../components/AppLayout";
-import usePopout from "../../components/popout/hooks/UsePopout";
-import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
-import { setCurrentModel } from "../../state/LayoutSlice";
-import { clearPopOutProperties } from "../../state/PopupSlice";
+import homeLayoutModel from "./HomeLayoutModel";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
 import { onSelectTab } from "../../state/TabManagementSlice";
-import homeLayoutModel from "./HomeLayoutModel";
+import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
+import { clearPopOutProperties } from "../../state/PopupSlice";
+import usePopout from "../../components/popout/hooks/UsePopout";
+import { setCurrentModel } from "../../state/LayoutSlice";
 
 const LayoutContainer = styled("div")`
   position: relative;
@@ -107,17 +107,15 @@ function Home() {
   }
 
   return (
-    <>
-      <LayoutContainer>
-        <AppLayout
-          ref={layoutRef}
-          model={layoutModel}
-          onRenderTabSet={handleRenderTabSet}
-          onAction={handleLayoutAction}
-          onModelChange={handleModelChange}
-        />
-      </LayoutContainer>
-    </>
+    <LayoutContainer>
+      <AppLayout
+        ref={layoutRef}
+        model={layoutModel}
+        onRenderTabSet={handleRenderTabSet}
+        onAction={handleLayoutAction}
+        onModelChange={handleModelChange}
+      />
+    </LayoutContainer>
   );
 }
 
