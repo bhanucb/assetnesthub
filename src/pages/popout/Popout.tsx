@@ -1,19 +1,14 @@
+import { Paper } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { FC, ReactElement, useEffect, useRef, useState } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
 import {
-  getLayoutComponent,
   LayoutComponentKeys,
+  getLayoutComponent,
 } from "../../components/AppLayout";
-import { Paper } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { useAppDispatch, useAppSelector } from "../../state/Store";
-import {
-  dequeuePopOuts,
-  dockPopOut,
-  enqueuePopOuts,
-} from "../../state/PopupSlice";
 import { appCloseKey } from "../../components/popout/AppPopout";
-import { Subscription, timer } from "rxjs";
+import { dockPopOut, enqueuePopOuts } from "../../state/PopupSlice";
+import { useAppDispatch, useAppSelector } from "../../state/Store";
 
 export type PopoutState = {
   tabId: string;
@@ -35,7 +30,7 @@ const Container = styled(Paper)`
   border-radius: 0;
 `;
 
-const POPOUT_CLOSE_TIMEOUT = 2000;
+// const POPOUT_CLOSE_TIMEOUT = 2000;
 
 // export enum PopoutComponentKeys {
 //   dagChart = "dagChart",
@@ -108,34 +103,34 @@ const Popout: FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    let timerSub: Subscription;
-    window.onstorage = (ev) => {
-      const { key, newValue } = ev;
-      if (key === appCloseKey && newValue === "true") {
-        timerSub = timer(POPOUT_CLOSE_TIMEOUT).subscribe(async () => {
-          if (tabId !== undefined) {
-            // dispatch state events before window close so that the updated state is persisted for the next page render
-            dispatch(
-              dockPopOut({ tabId: tabId.current, userInitiatedAction: false })
-            );
-            dispatch(dequeuePopOuts(tabId.current));
-          }
+  // useEffect(() => {
+  //   let timerSub: Subscription;
+  //   window.onstorage = (ev) => {
+  //     const { key, newValue } = ev;
+  //     if (key === appCloseKey && newValue === "true") {
+  //       timerSub = timer(POPOUT_CLOSE_TIMEOUT).subscribe(async () => {
+  //         if (tabId !== undefined) {
+  //           // dispatch state events before window close so that the updated state is persisted for the next page render
+  //           dispatch(
+  //             dockPopOut({ tabId: tabId.current, userInitiatedAction: false })
+  //           );
+  //           dispatch(dequeuePopOuts(tabId.current));
+  //         }
 
-          window.close();
-        });
-      }
-      if (key === appCloseKey && newValue === null) {
-        // cancelling timer if the page was reloaded instead of close
-        timerSub?.unsubscribe();
-      }
-    };
+  //         window.close();
+  //       });
+  //     }
+  //     if (key === appCloseKey && newValue === null) {
+  //       // cancelling timer if the page was reloaded instead of close
+  //       timerSub?.unsubscribe();
+  //     }
+  //   };
 
-    return () => {
-      window.onstorage = null;
-      timerSub?.unsubscribe();
-    };
-  }, []);
+  //   return () => {
+  //     window.onstorage = null;
+  //     timerSub?.unsubscribe();
+  //   };
+  // }, []);
 
   return <Container elevation={0}>{getComponent(component)}</Container>;
 };
