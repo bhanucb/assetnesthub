@@ -15,7 +15,7 @@ const Loader: FC = () => {
 
 function App() {
   return (
-    <BrowserRouter basename={BASENAME}>
+    <BrowserRouter>
       <ReduxProvider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <AppTheme>
