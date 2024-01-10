@@ -61,8 +61,8 @@ export const UsePopout = () => {
     //   features = `popout,innerHeight=${innerHeight},innerWidth=${innerWidth},screenX=${screenX},screenY=${screenY}`;
     // }
 
-    const url = `/popout/${tabId}`;
-    const windowRef = window.open(url, "_self");
+    const url = `/popout/test`;
+    const windowRef = window.open(url);
     // const windowRef = window.open(
     //   url,
     //   tabId,

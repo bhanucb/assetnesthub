@@ -11,7 +11,7 @@ export type IpaRoute = {
 
 export const NAVBAR_LINKS: Array<IpaRoute> = [
   { path: "/", name: "Home" },
-  { path: "/popout/summary", name: "Test" },
+  { path: "/test", name: "Test" },
 ];
 
 function PageWithNavigationBar() {
