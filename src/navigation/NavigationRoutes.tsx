@@ -1,8 +1,8 @@
 import { Outlet, Route, Routes } from "react-router-dom";
-import NavigationBar from "./NavigationBar";
 import Home from "../pages/home/Home";
 import Popout from "../pages/popout/Popout";
 import NotFound from "../pages/starter/NotFound";
+import NavigationBar from "./NavigationBar";
 
 export type IpaRoute = {
   path: string;
@@ -26,7 +26,7 @@ function NavigationRoutes() {
       <Route element={<PageWithNavigationBar />}>
         <Route path="/" element={<Home />} />
       </Route>
-      <Route path="/popout/:tabId" element={<Popout />} />
+      <Route path="/layout/:tabId" element={<Popout />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
