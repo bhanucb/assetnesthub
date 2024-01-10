@@ -29,7 +29,7 @@ function NavigationRoutes() {
       <Route element={<PageWithNavigationBar />}>
         <Route path="/" element={<Home />} />
       </Route>
-      <Route path="/test/:id" element={<div>TEST</div>} />
+      <Route path="/test" element={<div>TEST</div>} />
       <Route path="/popout/:tabId" element={<Popout />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
