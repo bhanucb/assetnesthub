@@ -9,7 +9,10 @@ export type IpaRoute = {
   name: string;
 };
 
-export const NAVBAR_LINKS: Array<IpaRoute> = [{ path: "/", name: "Home" }];
+export const NAVBAR_LINKS: Array<IpaRoute> = [
+  { path: "/", name: "Home" },
+  { path: "/test", name: "Test" },
+];
 
 function PageWithNavigationBar() {
   return (
@@ -26,6 +29,7 @@ function NavigationRoutes() {
       <Route element={<PageWithNavigationBar />}>
         <Route path="/" element={<Home />} />
       </Route>
+      <Route path="/test" element={<div>TEST</div>} />
       <Route path="/popout/:tabId" element={<Popout />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
