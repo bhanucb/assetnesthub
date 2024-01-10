@@ -1,3 +1,5 @@
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { styled } from "@mui/material/styles";
 import {
   Actions,
   BorderNode,
@@ -5,13 +7,10 @@ import {
   Model,
   TabSetNode,
 } from "flexlayout-react";
-import { LayoutComponentKeys } from "../../AppLayout";
-import { enqueuePopOuts } from "../../../state/PopupSlice";
-import { BASENAME } from "../../../App";
-import { useAppDispatch, useAppSelector } from "../../../state/Store";
-import { styled } from "@mui/material/styles";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useContext } from "react";
+import { enqueuePopOuts } from "../../../state/PopupSlice";
+import { useAppDispatch, useAppSelector } from "../../../state/Store";
+import { LayoutComponentKeys } from "../../AppLayout";
 import { PopoutContext } from "../context/PopoutContext";
 
 const ThemedOpenInNewIcon = styled(OpenInNewIcon)`
