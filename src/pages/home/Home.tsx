@@ -1,4 +1,3 @@
-import { createRef, useEffect, useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Action,
@@ -9,6 +8,7 @@ import {
   Model,
   TabSetNode,
 } from "flexlayout-react";
+import { createRef, useEffect, useRef, useState } from "react";
 import {
   getLastSavedHomeLayout,
   homeLayoutKey,
@@ -21,14 +21,13 @@ import AppLayout, {
   MoveNodeAction,
   SelectTabAction,
 } from "../../components/AppLayout";
-import homeLayoutModel from "./HomeLayoutModel";
+import usePopout from "../../components/popout/hooks/UsePopout";
+import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
+import { setCurrentModel } from "../../state/LayoutSlice";
+import { clearPopOutProperties } from "../../state/PopupSlice";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
 import { onSelectTab } from "../../state/TabManagementSlice";
-import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
-import { clearPopOutProperties } from "../../state/PopupSlice";
-import usePopout from "../../components/popout/hooks/UsePopout";
-import { setCurrentModel } from "../../state/LayoutSlice";
-import { Button } from "@mui/material";
+import homeLayoutModel from "./HomeLayoutModel";
 
 const LayoutContainer = styled("div")`
   position: relative;
@@ -109,7 +108,6 @@ function Home() {
 
   return (
     <>
-      <Button onClick={() => window.open("/popout/checkme")}>TeST</Button>
       <LayoutContainer>
         <AppLayout
           ref={layoutRef}
