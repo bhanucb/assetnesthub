@@ -28,6 +28,7 @@ import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
 import { clearPopOutProperties } from "../../state/PopupSlice";
 import usePopout from "../../components/popout/hooks/UsePopout";
 import { setCurrentModel } from "../../state/LayoutSlice";
+import { Button } from "@mui/material";
 
 const LayoutContainer = styled("div")`
   position: relative;
@@ -107,15 +108,18 @@ function Home() {
   }
 
   return (
-    <LayoutContainer>
-      <AppLayout
-        ref={layoutRef}
-        model={layoutModel}
-        onRenderTabSet={handleRenderTabSet}
-        onAction={handleLayoutAction}
-        onModelChange={handleModelChange}
-      />
-    </LayoutContainer>
+    <>
+      <Button onClick={() => window.open("/popout/checkme")}>TeST</Button>
+      <LayoutContainer>
+        <AppLayout
+          ref={layoutRef}
+          model={layoutModel}
+          onRenderTabSet={handleRenderTabSet}
+          onAction={handleLayoutAction}
+          onModelChange={handleModelChange}
+        />
+      </LayoutContainer>
+    </>
   );
 }
 
