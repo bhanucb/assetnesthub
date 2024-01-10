@@ -1,15 +1,13 @@
-import { FC, useCallback, useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Drawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
+import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import { styled } from "@mui/material/styles";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { ThemeSection } from "./ThemeSection";
+import { styled } from "@mui/material/styles";
+import { FC, useEffect, useState } from "react";
 import LayoutSection from "./LayoutSection";
-import { BASENAME } from "../../App";
-import { removeSlashes } from "../../utils/Misc";
+import { ThemeSection } from "./ThemeSection";
 
 const DrawerHeader = styled(Box)`
   display: flex;
@@ -32,8 +30,6 @@ export type RightDrawerProps = {
 
 const RightDrawer: FC<RightDrawerProps> = (props) => {
   const [open, setOpen] = useState(false);
-  const isHome =
-    removeSlashes(window.location.pathname) === removeSlashes(BASENAME);
 
   useEffect(() => {
     const { onReady } = props;
@@ -43,18 +39,6 @@ const RightDrawer: FC<RightDrawerProps> = (props) => {
   function toggleDrawer() {
     setOpen((prev) => !prev);
   }
-
-  const PageSpecificSections: FC = useCallback(() => {
-    if (isHome) {
-      return (
-        <>
-          <LayoutSection toggleDrawer={toggleDrawer} />
-        </>
-      );
-    }
-
-    return <></>;
-  }, [toggleDrawer, isHome]);
 
   return (
     <Drawer anchor={"right"} open={open} onClose={toggleDrawer}>
@@ -69,7 +53,7 @@ const RightDrawer: FC<RightDrawerProps> = (props) => {
       <Divider />
       <Box sx={{ width: { xs: 350, md: 450 } }} role="presentation">
         <ThemeSection />
-        <PageSpecificSections />
+        <LayoutSection toggleDrawer={toggleDrawer} />
       </Box>
     </Drawer>
   );

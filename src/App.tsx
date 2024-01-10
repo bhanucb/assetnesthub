@@ -1,13 +1,11 @@
 import { FC } from "react";
-import { BrowserRouter } from "react-router-dom";
-import NavigationRoutes from "./navigation/NavigationRoutes";
-import AppTheme from "./components/AppTheme";
-import { persistor, store } from "./state/Store";
-import { PersistGate } from "redux-persist/integration/react";
 import { Provider as ReduxProvider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
+import AppTheme from "./components/AppTheme";
 import AppPopout from "./components/popout/AppPopout";
-
-export const BASENAME = "/";
+import NavigationRoutes from "./navigation/NavigationRoutes";
+import { persistor, store } from "./state/Store";
 
 const Loader: FC = () => {
   return <div>Loading...</div>;
