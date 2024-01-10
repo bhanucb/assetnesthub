@@ -1,13 +1,12 @@
 import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FC, ReactElement, useEffect, useRef, useState } from "react";
-import { useBeforeUnload, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   LayoutComponentKeys,
   getLayoutComponent,
 } from "../../components/AppLayout";
-import { appCloseKey } from "../../components/popout/AppPopout";
-import { dockPopOut, enqueuePopOuts } from "../../state/PopupSlice";
+import { enqueuePopOuts } from "../../state/PopupSlice";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
 
 export type PopoutState = {
@@ -64,20 +63,20 @@ const Popout: FC = () => {
   );
   const dispatch = useAppDispatch();
 
-  useBeforeUnload(() => {
-    // when the popout closes on a timer due to app close, it will trigger useBeforeUnload on next page load
-    // this will avoid dispatching events that are not relevant on the next page load
-    const appClose = localStorage.getItem(appCloseKey);
-    if (appClose === "true") {
-      return;
-    }
+  // useBeforeUnload(() => {
+  //   // when the popout closes on a timer due to app close, it will trigger useBeforeUnload on next page load
+  //   // this will avoid dispatching events that are not relevant on the next page load
+  //   const appClose = localStorage.getItem(appCloseKey);
+  //   if (appClose === "true") {
+  //     return;
+  //   }
 
-    if (tabId !== undefined) {
-      dispatch(
-        dockPopOut({ tabId: tabId.current, userInitiatedAction: false })
-      );
-    }
-  });
+  //   if (tabId !== undefined) {
+  //     dispatch(
+  //       dockPopOut({ tabId: tabId.current, userInitiatedAction: false })
+  //     );
+  //   }
+  // });
 
   useEffect(() => {
     // retrieve tabId and component from session storage - if the popout was refreshed
