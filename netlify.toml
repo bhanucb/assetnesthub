@@ -1,4 +1,4 @@
 [[redirects]]
-    from = "/popout*"
+    from = "/popout/*"
     to = "/index.html"
     status = 200
