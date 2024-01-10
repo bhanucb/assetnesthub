@@ -5,7 +5,7 @@ Welcome to Asset Nest Hub, your go-to real estate investment application! This p
 ## Overview
 
 - **Tech Stack**: React, TypeScript, FlexLayout
-- **GitHub Repository**: [github.com/your-username/asset-nest-hub](https://github.com/your-username/asset-nest-hub)
+- **GitHub Repository**: [github.com/bhanucb/asset-nest-hub](https://github.com/bhanucb/asset-nest-hub)
 
 ## Features
 
@@ -27,7 +27,7 @@ To explore the project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/asset-nest-hub.git
+   git clone https://github.com/bhanucb/asset-nest-hub.git
 
 
 2. Navigate to the project directory:
