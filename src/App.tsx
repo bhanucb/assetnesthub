@@ -3,7 +3,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import AppTheme from "./components/AppTheme";
-import AppPopout from "./components/popout/AppPopout";
+// import AppPopout from "./components/popout/AppPopout";
 import NavigationRoutes from "./navigation/NavigationRoutes";
 import { persistor, store } from "./state/Store";
 
@@ -17,9 +17,9 @@ function App() {
       <ReduxProvider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <AppTheme>
-            <AppPopout>
+            {/* <AppPopout> */}
               <NavigationRoutes />
-            </AppPopout>
+            {/* </AppPopout> */}
           </AppTheme>
         </PersistGate>
       </ReduxProvider>
