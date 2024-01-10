@@ -1,8 +1,8 @@
 import { FC, PropsWithChildren, useEffect, useRef } from "react";
-import { PopoutContext } from "./context/PopoutContext";
-import { useAppSelector } from "../../state/Store";
 import { useBeforeUnload } from "react-router-dom";
-import { hasPageReloaded, removeSlashes } from "../../utils/Misc";
+import { useAppSelector } from "../../state/Store";
+import { hasPageReloaded } from "../../utils/Misc";
+import { PopoutContext } from "./context/PopoutContext";
 
 export const appCloseKey = "appClose";
 
@@ -15,11 +15,11 @@ const AppPopout: FC<PropsWithChildren> = ({ children }) => {
   }
 
   useBeforeUnload(() => {
-    const path = removeSlashes(window.location.pathname);
-    if (!path.includes("popout")) {
-      // set this only if any window other than the popout is closed
-      localStorage.setItem(appCloseKey, "true");
-    }
+    // const path = removeSlashes(window.location.pathname);
+    // if (!path.includes("popout")) {
+    //   // set this only if any window other than the popout is closed
+    //   localStorage.setItem(appCloseKey, "true");
+    // }
   });
 
   useEffect(() => {
