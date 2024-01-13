@@ -41,7 +41,7 @@ function ToolTopFormatter({
   payload,
   label,
 }: TooltipProps<string, string>) {
-  if (active && payload && payload.length) {
+  if (active && payload?.length) {
     const { minAmount, maxAmount, currentInvested, totalAllocated } = payload[0]
       .payload as PropertyData;
 
@@ -70,12 +70,14 @@ function ToolTopFormatter({
 }
 
 const InvAmountByPropType: FC = () => {
-  const [data, setData] = useState<Array<PropertyData>>([]);
+  const [data, setData] = useState<PropertyData[]>([]);
 
   useEffect(() => {
-    getRealEstateData().then((data) => {
-      setData(data);
-    });
+    getRealEstateData()
+      .then((data) => {
+        setData(data);
+      })
+      .catch((e) => console.error(e));
   }, []);
 
   return (
@@ -87,7 +89,7 @@ const InvAmountByPropType: FC = () => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="propertyType" />
-        <YAxis tickFormatter={(tick) => formatCurrency(tick, true)} />
+        <YAxis tickFormatter={(tick: number) => formatCurrency(tick, true)} />
         <Tooltip content={<ToolTopFormatter />} />
         <Legend />
         <Bar dataKey="minAmount" fill="#8884d8" name="Min Amount" />

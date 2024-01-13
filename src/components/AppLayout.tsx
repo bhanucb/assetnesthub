@@ -43,7 +43,8 @@ export enum LayoutComponentKeys {
   error = "error",
 }
 
-const layoutComponents: Map<LayoutComponentKeys, ReactElement> = new Map([
+/* eslint-disable react/jsx-key */
+const layoutComponents = new Map<LayoutComponentKeys, ReactElement>([
   [LayoutComponentKeys.summary, <Summary />],
   [LayoutComponentKeys.invAmountByPropType, <InvAmountByPropType />],
   [LayoutComponentKeys.propTypeBreakdown, <PropTypeBreakdown />],
@@ -55,13 +56,14 @@ const layoutComponents: Map<LayoutComponentKeys, ReactElement> = new Map([
   [LayoutComponentKeys.pricingLayout, <PricingLayout />],
   [LayoutComponentKeys.error, <div>Error Loading Component</div>],
 ]);
+/* eslint-enable react/jsx-key */
 
 export function getLayoutComponent(key: LayoutComponentKeys): ReactElement {
   return layoutComponents.get(key) ?? <></>;
 }
 
 const factory = (node: TabNode) => {
-  const component = node.getComponent();
+  const component = node.getComponent() as LayoutComponentKeys;
   if (component === undefined) return <></>;
 
   if (component === LayoutComponentKeys.unmount) {
@@ -98,5 +100,7 @@ const AppLayout = forwardRef(
     );
   }
 );
+
+AppLayout.displayName = "AppLayout";
 
 export default AppLayout;

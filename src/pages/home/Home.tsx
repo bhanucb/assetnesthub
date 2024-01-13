@@ -54,18 +54,20 @@ function Home() {
 
   // load last saved layout on page load
   useEffect(() => {
-    getLastSavedHomeLayout().then(async (model) => {
-      if (model) {
-        setLayoutModel(model);
+    getLastSavedHomeLayout()
+      .then((model) => {
+        if (model) {
+          setLayoutModel(model);
 
-        dispatch(
-          onSelectTab({
-            tabId: model.getActiveTabset()?.getSelectedNode()?.getId(),
-          })
-        );
-      }
-    });
-  }, []);
+          dispatch(
+            onSelectTab({
+              tabId: model.getActiveTabset()?.getSelectedNode()?.getId(),
+            })
+          );
+        }
+      })
+      .catch((e) => console.error(e));
+  }, [dispatch]);
 
   // actions to run when the layout is reset
   useEffect(() => {
@@ -75,9 +77,11 @@ function Home() {
     const baseModel = Model.fromJson(homeLayoutModel);
 
     setLayoutModel(baseModel);
-    saveHomeLayout(baseModel).then();
+    saveHomeLayout(baseModel)
+      .then()
+      .catch((e) => console.error(e));
     dispatch(clearPopOutProperties());
-  }, [lastReset]);
+  }, [dispatch, lastReset]);
 
   function handleLayoutAction(action: Action) {
     layoutAction.current = action.type as LayoutAction;

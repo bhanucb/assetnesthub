@@ -15,20 +15,20 @@ import {
 import { appCloseKey } from "../../components/popout/AppPopout";
 import { Subscription, timer } from "rxjs";
 
-export type PopoutState = {
+export interface PopoutState {
   tabId: string;
   component: LayoutComponentKeys;
-};
+}
 
-export type PopoutsState = Array<PopoutState>;
+export type PopoutsState = PopoutState[];
 
-export type PopoutProperties = {
+export interface PopoutProperties {
   tabId: string;
   screenX: number;
   screenY: number;
   innerHeight: number;
   innerWidth: number;
-};
+}
 
 const Container = styled(Paper)`
   height: 100vh;
@@ -106,14 +106,14 @@ const Popout: FC = () => {
         })
       );
     }
-  }, []);
+  }, [component, dispatch]);
 
   useEffect(() => {
     let timerSub: Subscription;
     window.onstorage = (ev) => {
       const { key, newValue } = ev;
       if (key === appCloseKey && newValue === "true") {
-        timerSub = timer(POPOUT_CLOSE_TIMEOUT).subscribe(async () => {
+        timerSub = timer(POPOUT_CLOSE_TIMEOUT).subscribe(() => {
           if (tabId !== undefined) {
             // dispatch state events before window close so that the updated state is persisted for the next page render
             dispatch(
@@ -135,7 +135,7 @@ const Popout: FC = () => {
       window.onstorage = null;
       timerSub?.unsubscribe();
     };
-  }, []);
+  }, [dispatch]);
 
   return <Container elevation={0}>{getComponent(component)}</Container>;
 };

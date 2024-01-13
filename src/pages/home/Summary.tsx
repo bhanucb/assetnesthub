@@ -27,11 +27,11 @@ const StyledGrid = styled(Grid)`
   }
 `;
 
-type ItemProps = {
+interface ItemProps {
   value: string;
   text: string;
   icon: ReactElement;
-};
+}
 
 const Item: FC<ItemProps> = ({ value, text, icon }) => {
   return (

@@ -9,7 +9,7 @@ import {
 export interface PopoutState {
   popOuts: PopoutsState;
   lastPopout: (SinglePopoutState & { closedByUser: boolean }) | undefined;
-  popoutProperties: Array<PopoutProperties>;
+  popoutProperties: PopoutProperties[];
 }
 
 const initialState: PopoutState = {
@@ -28,7 +28,7 @@ export const popoutSlice = createSlice({
     },
     updatePopOutProperties: (
       state,
-      action: PayloadAction<Array<PopoutProperties>>
+      action: PayloadAction<PopoutProperties[]>
     ) => {
       state.popoutProperties = action.payload;
     },
@@ -44,7 +44,7 @@ export const popoutSlice = createSlice({
       const lastPopout = state.popOuts.find(
         (p) => p.tabId === action.payload.tabId
       );
-      if (!!lastPopout) {
+      if (lastPopout) {
         state.lastPopout = {
           ...lastPopout,
           closedByUser: action.payload.userInitiatedAction,

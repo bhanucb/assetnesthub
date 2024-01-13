@@ -30,11 +30,14 @@ export const UsePopout = () => {
     if ("getScreenDetails" in window) {
       try {
         const permission = await navigator.permissions.query({
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           name: "window-placement",
         });
         if (permission.state !== "denied") {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return window.getScreenDetails();
         } else {
           return null;
