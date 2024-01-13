@@ -1,9 +1,5 @@
 import { FC, ReactElement, useEffect, useRef, useState } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
-import {
-  getLayoutComponent,
-  LayoutComponentKeys,
-} from "../../components/AppLayout";
 import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
@@ -14,6 +10,8 @@ import {
 } from "../../state/PopupSlice";
 import { appCloseKey } from "../../components/popout/AppPopout";
 import { Subscription, timer } from "rxjs";
+import { LayoutComponentKeys } from "../../Constants";
+import { getLayoutComponent } from "../../components/layout/AppLayoutUtils";
 
 export interface PopoutState {
   tabId: string;

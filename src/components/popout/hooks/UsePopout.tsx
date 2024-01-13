@@ -10,8 +10,8 @@ import {
 import { useContext } from "react";
 import { enqueuePopOuts } from "../../../state/PopupSlice";
 import { useAppDispatch, useAppSelector } from "../../../state/Store";
-import { LayoutComponentKeys } from "../../AppLayout";
 import { PopoutContext } from "../context/PopoutContext";
+import { LayoutComponentKeys } from "../../../Constants";
 
 const ThemedOpenInNewIcon = styled(OpenInNewIcon)`
   color: #808080;

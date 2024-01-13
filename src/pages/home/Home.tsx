@@ -14,13 +14,6 @@ import {
   homeLayoutKey,
   saveHomeLayout,
 } from "../../api/Layouts";
-import AppLayout, {
-  AddNodeAction,
-  DeleteTabAction,
-  LayoutAction,
-  MoveNodeAction,
-  SelectTabAction,
-} from "../../components/AppLayout";
 import homeLayoutModel from "./HomeLayoutModel";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
 import { onSelectTab } from "../../state/TabManagementSlice";
@@ -28,6 +21,13 @@ import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
 import { clearPopOutProperties } from "../../state/PopupSlice";
 import usePopout from "../../components/popout/hooks/UsePopout";
 import { setCurrentModel } from "../../state/LayoutSlice";
+import AppLayout, {
+  AddNodeAction,
+  DeleteTabAction,
+  LayoutAction,
+  MoveNodeAction,
+  SelectTabAction,
+} from "../../components/layout/AppLayout";
 
 const LayoutContainer = styled("div")`
   position: relative;
