@@ -11,7 +11,8 @@ import {
 import {
   getLastSavedHomeLayout,
   homeLayoutKey,
-  saveHomeLayout,
+  saveDesktopLayout,
+  saveMobileLayout,
 } from "../../api/Layouts";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
 import { onSelectTab } from "../../state/TabManagementSlice";
@@ -62,32 +63,44 @@ function Home() {
   useEffect(() => {
     getLastSavedHomeLayout()
       .then((model) => {
-        if (model) {
-          setLayoutModel(model);
+        const modelInUse = isMobile ? model.mobile : model.desktop;
+
+        if (modelInUse) {
+          setLayoutModel(modelInUse);
 
           dispatch(
             onSelectTab({
-              tabId: model.getActiveTabset()?.getSelectedNode()?.getId(),
+              tabId: modelInUse.getActiveTabset()?.getSelectedNode()?.getId(),
             })
           );
         }
       })
       .catch((e) => console.error(e));
-  }, [dispatch]);
+  }, [dispatch, isMobile]);
 
   // actions to run when the layout is reset
   useEffect(() => {
     if (lastReset?.layoutKey !== homeLayoutKey) return;
 
     // reopen price sheets that were already open before the layout was reset
-    const baseModel = Model.fromJson(homeLayoutModel);
+    const baseModel = isMobile
+      ? Model.fromJson(mobileHomeLayout)
+      : Model.fromJson(homeLayoutModel);
 
     setLayoutModel(baseModel);
-    saveHomeLayout(baseModel)
-      .then()
-      .catch((e) => console.error(e));
+
+    if (isMobile) {
+      saveMobileLayout(baseModel)
+        .then()
+        .catch((e) => console.error(e));
+    } else {
+      saveDesktopLayout(baseModel)
+        .then()
+        .catch((e) => console.error(e));
+    }
+
     dispatch(clearPopOutProperties());
-  }, [dispatch, lastReset]);
+  }, [dispatch, isMobile, lastReset]);
 
   function handleLayoutAction(action: Action) {
     layoutAction.current = action.type as LayoutAction;
@@ -103,7 +116,7 @@ function Home() {
 
   async function handleModelChange(model: Model) {
     if (layoutAction.current === SelectTabAction) {
-      await saveHomeLayout(model);
+      isMobile ? await saveMobileLayout(model) : await saveDesktopLayout(model);
     }
 
     if (
