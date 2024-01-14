@@ -7,7 +7,8 @@ import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
 import {
   getLastSavedHomeLayout,
   homeLayoutKey,
-  saveHomeLayout,
+  saveDesktopLayout,
+  saveMobileLayout,
 } from "../../api/Layouts";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
 import { resetLayout, setCurrentModel } from "../../state/LayoutSlice";
@@ -15,10 +16,12 @@ import Stack from "@mui/material/Stack";
 import { updatePopOutProperties } from "../../state/PopupSlice";
 import { PopoutProperties } from "../../pages/popout/Popout";
 import usePopout from "../../components/popout/hooks/UsePopout";
-import homeLayoutModel from "../../pages/home/HomeLayoutModel";
 import { Model } from "flexlayout-react";
 import { onSelectTab } from "../../state/TabManagementSlice";
 import { LayoutComponentKeys } from "../../Constants";
+import homeLayoutModel from "../../pages/home/layoutModels/HomeLayoutModel";
+import mobileHomeLayoutModel from "../../pages/home/layoutModels/MobileHomeLayoutModel";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
 
 interface LayoutResetProps {
   toggleDrawer: () => void;
@@ -28,6 +31,7 @@ const confirmMessage = "Are you sure you want to reset the layout?";
 
 const LayoutSection: FC<LayoutResetProps> = (props) => {
   const dispatch = useAppDispatch();
+  const { isMobile } = useResponsiveBreakpoints();
   const { popOuts, popoutProperties } = useAppSelector(
     (state) => state.popouts
   );
@@ -62,16 +66,32 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
       });
     }
     dispatch(updatePopOutProperties(properties));
-    if (currentModel !== undefined) await saveHomeLayout(currentModel);
+
+    if (currentModel.mobile !== undefined) {
+      await saveMobileLayout(currentModel.mobile);
+    }
+
+    if (currentModel.desktop !== undefined) {
+      await saveDesktopLayout(currentModel.desktop);
+    }
+
     toggleDrawer();
   }
 
   async function loadLayout() {
-    const model =
-      (await getLastSavedHomeLayout()) ?? Model.fromJson(homeLayoutModel);
+    const storedModel = await getLastSavedHomeLayout();
+
+    if (storedModel.mobile === null) {
+      storedModel.mobile = Model.fromJson(mobileHomeLayoutModel);
+    }
+    if (storedModel.desktop === null) {
+      storedModel.desktop = Model.fromJson(homeLayoutModel);
+    }
+
+    const model = isMobile ? storedModel.mobile : storedModel.desktop;
 
     unmountComponents(model);
-    dispatch(setCurrentModel(model.toString()));
+    dispatch(setCurrentModel({ model: model.toString(), isMobile }));
     dispatch(
       onSelectTab({
         tabId: model.getActiveTabset()?.getSelectedNode()?.getId(),

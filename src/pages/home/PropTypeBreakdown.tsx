@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { getRealEstateData, PropertyData } from "../../api/RealEstateData";
 import { formatCurrency } from "../../utils/Misc";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
 
 const StyledGridContainer = styled(Box)`
   width: 100%;
@@ -11,6 +12,7 @@ const StyledGridContainer = styled(Box)`
 
 const PropTypeBreakdown: FC = () => {
   const [data, setData] = useState<PropertyData[]>([]);
+  const { isMobile } = useResponsiveBreakpoints();
 
   useEffect(() => {
     getRealEstateData()
@@ -30,33 +32,42 @@ const PropTypeBreakdown: FC = () => {
   }
 
   const columns: GridColDef[] = [
-    { field: "propertyType", headerName: "Property Type", flex: 1 },
+    {
+      field: "propertyType",
+      headerName: "Prop. Type",
+      flex: 1,
+      minWidth: isMobile ? 150 : undefined,
+    },
     {
       field: "minAmount",
-      headerName: "Min Amount",
+      headerName: "Min Amt",
       type: "number",
       flex: 1,
+      minWidth: isMobile ? 150 : undefined,
       valueGetter: formatCurrencyInGrid,
     },
     {
       field: "currentInvested",
-      headerName: "Current Invested",
+      headerName: "Current Inv.",
       type: "number",
       flex: 1,
+      minWidth: isMobile ? 150 : undefined,
       valueGetter: formatCurrencyInGrid,
     },
     {
       field: "totalAllocated",
-      headerName: "Total Allocated",
+      headerName: "Total Alloc.",
       type: "number",
       flex: 1,
+      minWidth: isMobile ? 150 : undefined,
       valueGetter: formatCurrencyInGrid,
     },
     {
       field: "maxAmount",
-      headerName: "Max Amount",
+      headerName: "Max Amt",
       type: "number",
       flex: 1,
+      minWidth: isMobile ? 150 : undefined,
       valueGetter: formatCurrencyInGrid,
     },
   ];

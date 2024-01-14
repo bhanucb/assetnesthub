@@ -1,6 +1,5 @@
 import { IJsonModel } from "flexlayout-react";
-
-import { LayoutComponentKeys } from "../../Constants";
+import { LayoutComponentKeys } from "../../../Constants";
 
 const model: IJsonModel = {
   global: {},

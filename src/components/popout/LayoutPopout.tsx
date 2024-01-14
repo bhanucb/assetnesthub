@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../state/Store";
 import usePopout from "./hooks/UsePopout";
 import { PopoutContext } from "./context/PopoutContext";
 import { dequeuePopOuts } from "../../state/PopupSlice";
-import { saveHomeLayout } from "../../api/Layouts";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
+import { saveDesktopLayout, saveMobileLayout } from "../../api/Layouts";
 
 type LayoutPopoutProps = PropsWithChildren & { layoutModel: Model };
 
@@ -14,6 +15,7 @@ const LayoutPopout = (props: LayoutPopoutProps) => {
   const { windowRefs } = useContext(PopoutContext);
   const { lastPopout, popOuts } = useAppSelector((state) => state.popouts);
   const { unmountComponents } = usePopout();
+  const { isMobile } = useResponsiveBreakpoints();
   const dispatch = useAppDispatch();
 
   // action to run when a pop out is docked in
@@ -27,16 +29,20 @@ const LayoutPopout = (props: LayoutPopoutProps) => {
 
       // if the user manually saves the layout while a window is popped out the layout will have that window unmounted
       // saving the layout on unmount will prevent the layout showing "unmount" on page load
-      saveHomeLayout(layoutModel)
-        .then()
-        .catch((e) => console.error(e));
+      isMobile
+        ? saveMobileLayout(layoutModel)
+            .then()
+            .catch((e) => console.error(e))
+        : saveDesktopLayout(layoutModel)
+            .then()
+            .catch((e) => console.error(e));
 
       dispatch(dequeuePopOuts(lastPopout.tabId));
       if (closedByUser) {
         windowRefs.get(lastPopout.tabId)?.window.close();
       }
     }
-  }, [dispatch, lastPopout, layoutModel, windowRefs]);
+  }, [dispatch, isMobile, lastPopout, layoutModel, windowRefs]);
 
   // action to run when a pop out is docked out
   useEffect(() => {
