@@ -67,11 +67,14 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
     }
     dispatch(updatePopOutProperties(properties));
 
-    if (currentModel !== undefined) {
-      isMobile
-        ? await saveMobileLayout(currentModel)
-        : await saveDesktopLayout(currentModel);
+    if (currentModel.mobile !== undefined) {
+      await saveMobileLayout(currentModel.mobile);
     }
+
+    if (currentModel.desktop !== undefined) {
+      await saveDesktopLayout(currentModel.desktop);
+    }
+
     toggleDrawer();
   }
 
@@ -88,7 +91,7 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
     const model = isMobile ? storedModel.mobile : storedModel.desktop;
 
     unmountComponents(model);
-    dispatch(setCurrentModel(model.toString()));
+    dispatch(setCurrentModel({ model: model.toString(), isMobile }));
     dispatch(
       onSelectTab({
         tabId: model.getActiveTabset()?.getSelectedNode()?.getId(),

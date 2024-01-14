@@ -53,11 +53,18 @@ function Home() {
 
   // update model in component when the layout model change in the global state
   useEffect(() => {
-    if (currentModel === undefined) return;
-    const json = JSON.parse(currentModel) as IJsonModel;
-    const model = Model.fromJson(json);
-    setLayoutModel(model);
-  }, [currentModel]);
+    if (isMobile) {
+      if (currentModel.mobile === undefined) return;
+      const json = JSON.parse(currentModel.mobile) as IJsonModel;
+      const model = Model.fromJson(json);
+      setLayoutModel(model);
+    } else {
+      if (currentModel.desktop === undefined) return;
+      const json = JSON.parse(currentModel.desktop) as IJsonModel;
+      const model = Model.fromJson(json);
+      setLayoutModel(model);
+    }
+  }, [currentModel, isMobile]);
 
   // load last saved layout on page load
   useEffect(() => {
@@ -125,7 +132,7 @@ function Home() {
       layoutAction.current === AddNodeAction ||
       layoutAction.current === SelectTabAction
     ) {
-      dispatch(setCurrentModel(model.toString()));
+      dispatch(setCurrentModel({ model: model.toString(), isMobile }));
     }
   }
 
