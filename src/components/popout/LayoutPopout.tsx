@@ -22,25 +22,28 @@ const LayoutPopout = (props: LayoutPopoutProps) => {
 
     const { tabId, component, closedByUser } = lastPopout;
 
-    if (!!layoutModel?.getNodeById(tabId)) {
+    if (layoutModel?.getNodeById(tabId)) {
       layoutModel.doAction(Actions.updateNodeAttributes(tabId, { component }));
 
       // if the user manually saves the layout while a window is popped out the layout will have that window unmounted
       // saving the layout on unmount will prevent the layout showing "unmount" on page load
-      saveHomeLayout(layoutModel).then();
+      saveHomeLayout(layoutModel)
+        .then()
+        .catch((e) => console.error(e));
 
       dispatch(dequeuePopOuts(lastPopout.tabId));
       if (closedByUser) {
         windowRefs.get(lastPopout.tabId)?.window.close();
       }
     }
-  }, [lastPopout, windowRefs]);
+  }, [dispatch, lastPopout, layoutModel, windowRefs]);
 
   // action to run when a pop out is docked out
   useEffect(() => {
     if (layoutModel === undefined) return;
 
     unmountComponents(layoutModel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popOuts.length, layoutModel]);
 
   return <>{children}</>;

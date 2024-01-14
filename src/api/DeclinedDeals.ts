@@ -39,7 +39,7 @@ const generateFakeDeclinedDealsData = (count: number): DeclinedDealData[] => {
   return fakeData;
 };
 
-export function getDeclinedDeals(): Promise<Array<DeclinedDealData>> {
+export function getDeclinedDeals(): Promise<DeclinedDealData[]> {
   return new Promise((resolve) =>
     setTimeout(() => resolve(generateFakeDeclinedDealsData(100)), 445)
   );

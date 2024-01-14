@@ -44,11 +44,11 @@ function ToolTopFormatter({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  if (active && payload && payload.length) {
+  if (active && payload?.length) {
     return (
       <Paper elevation={0}>
         <Box p={1} className="tooltip">
-          <Box>{dayjs(label).format("YYYY-MM-DD")}</Box>
+          <Box>{dayjs(label as string).format("YYYY-MM-DD")}</Box>
           <Box>{formatCurrency(payload[0].value ?? 0)}</Box>
         </Box>
       </Paper>
@@ -59,10 +59,12 @@ function ToolTopFormatter({
 }
 
 const TrendOfTotalAllocatedAmount: FC = () => {
-  const [data, setDate] = useState<Array<RealEstateAllocatedAmount>>([]);
+  const [data, setDate] = useState<RealEstateAllocatedAmount[]>([]);
 
   useEffect(() => {
-    getTotalAllocatedAmounts().then((data) => setDate(data));
+    getTotalAllocatedAmounts()
+      .then((data) => setDate(data))
+      .catch((e) => console.error(e));
   }, []);
 
   const formatDate = (date: string): string => {
@@ -79,11 +81,11 @@ const TrendOfTotalAllocatedAmount: FC = () => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="date"
-          tickFormatter={(tick) => formatDate(tick)}
+          tickFormatter={(tick: string) => formatDate(tick)}
           tick={{ fontSize: 12 }}
         />
         <YAxis
-          tickFormatter={(tick) => formatCurrency(tick, true)}
+          tickFormatter={(tick: number) => formatCurrency(tick, true)}
           tick={{ fontSize: 12 }}
         />
         <Tooltip content={<ToolTopFormatter />} />

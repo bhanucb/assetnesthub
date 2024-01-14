@@ -15,14 +15,14 @@ import Stack from "@mui/material/Stack";
 import { updatePopOutProperties } from "../../state/PopupSlice";
 import { PopoutProperties } from "../../pages/popout/Popout";
 import usePopout from "../../components/popout/hooks/UsePopout";
-import { LayoutComponentKeys } from "../../components/AppLayout";
 import homeLayoutModel from "../../pages/home/HomeLayoutModel";
 import { Model } from "flexlayout-react";
 import { onSelectTab } from "../../state/TabManagementSlice";
+import { LayoutComponentKeys } from "../../Constants";
 
-type LayoutResetProps = {
+interface LayoutResetProps {
   toggleDrawer: () => void;
-};
+}
 
 const confirmMessage = "Are you sure you want to reset the layout?";
 
@@ -43,7 +43,7 @@ const LayoutSection: FC<LayoutResetProps> = (props) => {
   }
 
   async function handleSaveLayout() {
-    const properties: Array<PopoutProperties> = [];
+    const properties: PopoutProperties[] = [];
     for (const popout of popOuts) {
       const ref = window.open("", popout.tabId);
       if (ref === null) continue;

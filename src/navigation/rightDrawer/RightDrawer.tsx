@@ -5,7 +5,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import { FC, useEffect, useState } from "react";
+import { forwardRef, Ref, useImperativeHandle, useState } from "react";
 import LayoutSection from "./LayoutSection";
 import { ThemeSection } from "./ThemeSection";
 
@@ -20,21 +20,16 @@ const DrawerHeader = styled(Box)`
   }
 `;
 
-export type RightDrawerApi = {
+export interface RightDrawerRef {
   toggleDrawer: () => void;
-};
+}
 
-export type RightDrawerProps = {
-  onReady?: (props: { api: RightDrawerApi }) => void;
-};
-
-const RightDrawer: FC<RightDrawerProps> = (props) => {
+const RightDrawer = forwardRef((_, ref: Ref<RightDrawerRef>) => {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const { onReady } = props;
-    onReady?.({ api: { toggleDrawer: toggleDrawer } });
-  }, []);
+  useImperativeHandle(ref, () => ({
+    toggleDrawer,
+  }));
 
   function toggleDrawer() {
     setOpen((prev) => !prev);
@@ -57,6 +52,8 @@ const RightDrawer: FC<RightDrawerProps> = (props) => {
       </Box>
     </Drawer>
   );
-};
+});
+
+RightDrawer.displayName = "RightDrawer";
 
 export default RightDrawer;

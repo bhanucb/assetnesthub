@@ -26,7 +26,7 @@ const generateFakeAllocatedData = (): RealEstateAllocatedAmount[] => {
 };
 
 export function getTotalAllocatedAmounts(): Promise<
-  Array<RealEstateAllocatedAmount>
+  RealEstateAllocatedAmount[]
 > {
   return new Promise((resolve) =>
     setTimeout(() => resolve(generateFakeAllocatedData()), 445)

@@ -10,13 +10,12 @@ export interface PropertyData {
 }
 
 const generateFakeRealEstateData = (
-  propertyTypes: Array<string>
+  propertyTypes: string[]
 ): PropertyData[] => {
   const fakeData: PropertyData[] = [];
 
-  for (let i = 0; i < propertyTypes.length; i++) {
+  for (const propertyType of propertyTypes) {
     const propertyId = faker.datatype.uuid();
-    const propertyType = propertyTypes[i];
     const minAmount = faker.datatype.number({ min: 30000, max: 100000 });
     const currentInvested = faker.datatype.number({ min: 80000, max: 300000 });
     const totalAllocated = faker.datatype.number({ min: 150000, max: 500000 });
@@ -37,7 +36,7 @@ const generateFakeRealEstateData = (
   return fakeData;
 };
 
-export function getRealEstateData(): Promise<Array<PropertyData>> {
+export function getRealEstateData(): Promise<PropertyData[]> {
   const propertyTypes = [
     "Residential",
     "Commercial",

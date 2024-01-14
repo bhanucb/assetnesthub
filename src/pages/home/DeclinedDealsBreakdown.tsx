@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { DeclinedDealData, getDeclinedDeals } from "../../api/DeclinedDeals";
@@ -10,10 +10,12 @@ const StyledGridContainer = styled(Box)`
 `;
 
 const DeclinedDealsBreakdown: FC = () => {
-  const [data, setData] = useState<Array<DeclinedDealData>>([]);
+  const [data, setData] = useState<DeclinedDealData[]>([]);
 
   useEffect(() => {
-    getDeclinedDeals().then((data) => setData(data));
+    getDeclinedDeals()
+      .then((data) => setData(data))
+      .catch((e) => console.error(e));
   }, []);
 
   const columns: GridColDef[] = [
@@ -24,14 +26,16 @@ const DeclinedDealsBreakdown: FC = () => {
       headerName: "Proposal Amount",
       type: "number",
       flex: 1,
-      valueGetter: (params) => formatCurrency(params.value),
+      valueGetter: (params: GridValueGetterParams<DeclinedDealData, number>) =>
+        params.value && formatCurrency(params.value),
     },
     {
       field: "currentInvestedPercentage",
       headerName: "Current Invested (%)",
       type: "number",
       flex: 1,
-      valueGetter: (params) => formatPercentage(params.value),
+      valueGetter: (params: GridValueGetterParams<DeclinedDealData, number>) =>
+        params.value && formatPercentage(params.value),
     },
   ];
 
@@ -40,7 +44,7 @@ const DeclinedDealsBreakdown: FC = () => {
       <DataGrid
         rows={data}
         columns={columns}
-        getRowId={(data) => data.dealId}
+        getRowId={(data) => (data as DeclinedDealData).dealId}
         hideFooter
       />
     </StyledGridContainer>

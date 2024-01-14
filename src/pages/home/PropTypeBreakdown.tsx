@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { getRealEstateData, PropertyData } from "../../api/RealEstateData";
@@ -10,16 +10,24 @@ const StyledGridContainer = styled(Box)`
 `;
 
 const PropTypeBreakdown: FC = () => {
-  const [data, setData] = useState<Array<PropertyData>>([]);
+  const [data, setData] = useState<PropertyData[]>([]);
 
   useEffect(() => {
-    getRealEstateData().then((data) => {
-      // const sortedData = data.sort((a, b) =>
-      //   a.dealName.localeCompare(b.dealName)
-      // );
-      setData(data);
-    });
+    getRealEstateData()
+      .then((data) => {
+        // const sortedData = data.sort((a, b) =>
+        //   a.dealName.localeCompare(b.dealName)
+        // );
+        setData(data);
+      })
+      .catch((e) => console.error(e));
   }, []);
+
+  function formatCurrencyInGrid(
+    params: GridValueGetterParams<PropertyData, number>
+  ) {
+    return params.value && formatCurrency(params.value);
+  }
 
   const columns: GridColDef[] = [
     { field: "propertyType", headerName: "Property Type", flex: 1 },
@@ -28,28 +36,28 @@ const PropTypeBreakdown: FC = () => {
       headerName: "Min Amount",
       type: "number",
       flex: 1,
-      valueGetter: (params) => formatCurrency(params.value),
+      valueGetter: formatCurrencyInGrid,
     },
     {
       field: "currentInvested",
       headerName: "Current Invested",
       type: "number",
       flex: 1,
-      valueGetter: (params) => formatCurrency(params.value),
+      valueGetter: formatCurrencyInGrid,
     },
     {
       field: "totalAllocated",
       headerName: "Total Allocated",
       type: "number",
       flex: 1,
-      valueGetter: (params) => formatCurrency(params.value),
+      valueGetter: formatCurrencyInGrid,
     },
     {
       field: "maxAmount",
       headerName: "Max Amount",
       type: "number",
       flex: 1,
-      valueGetter: (params) => formatCurrency(params.value),
+      valueGetter: formatCurrencyInGrid,
     },
   ];
 
@@ -58,7 +66,7 @@ const PropTypeBreakdown: FC = () => {
       <DataGrid
         rows={data}
         columns={columns}
-        getRowId={(data) => data.propertyId}
+        getRowId={(data) => (data as PropertyData).propertyId}
         hideFooter
       />
     </StyledGridContainer>

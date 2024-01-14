@@ -1,9 +1,5 @@
 import { FC, ReactElement, useEffect, useRef, useState } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
-import {
-  getLayoutComponent,
-  LayoutComponentKeys,
-} from "../../components/AppLayout";
 import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
@@ -14,21 +10,23 @@ import {
 } from "../../state/PopupSlice";
 import { appCloseKey } from "../../components/popout/AppPopout";
 import { Subscription, timer } from "rxjs";
+import { LayoutComponentKeys } from "../../Constants";
+import { getLayoutComponent } from "../../components/layout/AppLayoutUtils";
 
-export type PopoutState = {
+export interface PopoutState {
   tabId: string;
   component: LayoutComponentKeys;
-};
+}
 
-export type PopoutsState = Array<PopoutState>;
+export type PopoutsState = PopoutState[];
 
-export type PopoutProperties = {
+export interface PopoutProperties {
   tabId: string;
   screenX: number;
   screenY: number;
   innerHeight: number;
   innerWidth: number;
-};
+}
 
 const Container = styled(Paper)`
   height: 100vh;
@@ -106,14 +104,14 @@ const Popout: FC = () => {
         })
       );
     }
-  }, []);
+  }, [component, dispatch]);
 
   useEffect(() => {
     let timerSub: Subscription;
     window.onstorage = (ev) => {
       const { key, newValue } = ev;
       if (key === appCloseKey && newValue === "true") {
-        timerSub = timer(POPOUT_CLOSE_TIMEOUT).subscribe(async () => {
+        timerSub = timer(POPOUT_CLOSE_TIMEOUT).subscribe(() => {
           if (tabId !== undefined) {
             // dispatch state events before window close so that the updated state is persisted for the next page render
             dispatch(
@@ -135,7 +133,7 @@ const Popout: FC = () => {
       window.onstorage = null;
       timerSub?.unsubscribe();
     };
-  }, []);
+  }, [dispatch]);
 
   return <Container elevation={0}>{getComponent(component)}</Container>;
 };

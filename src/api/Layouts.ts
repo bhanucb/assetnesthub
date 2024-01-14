@@ -6,7 +6,7 @@ export type LayoutKey = typeof homeLayoutKey;
 export function getLastSavedHomeLayout(): Promise<Model | null> {
   const tabLayout = localStorage.getItem(homeLayoutKey);
   if (tabLayout) {
-    const jsonModel: IJsonModel = JSON.parse(tabLayout);
+    const jsonModel = JSON.parse(tabLayout) as IJsonModel;
     const layoutModel = Model.fromJson(jsonModel);
     return Promise.resolve(layoutModel);
   }

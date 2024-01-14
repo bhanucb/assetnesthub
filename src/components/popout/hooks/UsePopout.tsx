@@ -10,8 +10,8 @@ import {
 import { useContext } from "react";
 import { enqueuePopOuts } from "../../../state/PopupSlice";
 import { useAppDispatch, useAppSelector } from "../../../state/Store";
-import { LayoutComponentKeys } from "../../AppLayout";
 import { PopoutContext } from "../context/PopoutContext";
+import { LayoutComponentKeys } from "../../../Constants";
 
 const ThemedOpenInNewIcon = styled(OpenInNewIcon)`
   color: #808080;
@@ -30,11 +30,14 @@ export const UsePopout = () => {
     if ("getScreenDetails" in window) {
       try {
         const permission = await navigator.permissions.query({
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           name: "window-placement",
         });
         if (permission.state !== "denied") {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return window.getScreenDetails();
         } else {
           return null;
