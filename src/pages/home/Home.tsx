@@ -27,9 +27,13 @@ import AppLayout, {
 } from "../../components/layout/AppLayout";
 import Box from "@mui/material/Box";
 import homeLayoutModel from "./layoutModels/HomeLayoutModel";
+import mobileHomeLayout from "./layoutModels/MobileHomeLayoutModel";
+import useMobile from "../../hooks/UseMobile";
+import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
 
 function Home() {
   const layoutRef = createRef<Layout>();
+  const { isMobile } = useMobile();
   const [layoutModel, setLayoutModel] = useState<Model>(
     Model.fromJson(homeLayoutModel)
   );
@@ -37,6 +41,14 @@ function Home() {
   const { currentModel, lastReset } = useAppSelector((state) => state.layout);
   const { handleRenderTabSet: parentHandleRenderTabSet } = usePopout();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isMobile) {
+      setLayoutModel(Model.fromJson(mobileHomeLayout));
+    } else {
+      setLayoutModel(Model.fromJson(homeLayoutModel));
+    }
+  }, [isMobile]);
 
   // update model in component when the layout model change in the global state
   useEffect(() => {
@@ -108,8 +120,7 @@ function Home() {
     <Box
       sx={{
         position: "relative",
-        // height: `calc(100vh - ${NAVIGATION_BAR_HEIGHT}px)`,
-        height: 1500,
+        height: { xs: 2000, md: `calc(100vh - ${NAVIGATION_BAR_HEIGHT}px)` },
       }}
     >
       <AppLayout
