@@ -1,5 +1,4 @@
 import { createRef, useEffect, useRef, useState } from "react";
-import { styled } from "@mui/material/styles";
 import {
   Action,
   BorderNode,
@@ -14,10 +13,8 @@ import {
   homeLayoutKey,
   saveHomeLayout,
 } from "../../api/Layouts";
-import homeLayoutModel from "./HomeLayoutModel";
 import { useAppDispatch, useAppSelector } from "../../state/Store";
 import { onSelectTab } from "../../state/TabManagementSlice";
-import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
 import { clearPopOutProperties } from "../../state/PopupSlice";
 import usePopout from "../../components/popout/hooks/UsePopout";
 import { setCurrentModel } from "../../state/LayoutSlice";
@@ -28,11 +25,8 @@ import AppLayout, {
   MoveNodeAction,
   SelectTabAction,
 } from "../../components/layout/AppLayout";
-
-const LayoutContainer = styled("div")`
-  position: relative;
-  height: calc(100vh - ${NAVIGATION_BAR_HEIGHT}px);
-`;
+import Box from "@mui/material/Box";
+import homeLayoutModel from "./layoutModels/HomeLayoutModel";
 
 function Home() {
   const layoutRef = createRef<Layout>();
@@ -111,7 +105,13 @@ function Home() {
   }
 
   return (
-    <LayoutContainer>
+    <Box
+      sx={{
+        position: "relative",
+        // height: `calc(100vh - ${NAVIGATION_BAR_HEIGHT}px)`,
+        height: 1500,
+      }}
+    >
       <AppLayout
         ref={layoutRef}
         model={layoutModel}
@@ -119,7 +119,7 @@ function Home() {
         onAction={handleLayoutAction}
         onModelChange={handleModelChange}
       />
-    </LayoutContainer>
+    </Box>
   );
 }
 

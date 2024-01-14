@@ -15,10 +15,10 @@ import Stack from "@mui/material/Stack";
 import { updatePopOutProperties } from "../../state/PopupSlice";
 import { PopoutProperties } from "../../pages/popout/Popout";
 import usePopout from "../../components/popout/hooks/UsePopout";
-import homeLayoutModel from "../../pages/home/HomeLayoutModel";
 import { Model } from "flexlayout-react";
 import { onSelectTab } from "../../state/TabManagementSlice";
 import { LayoutComponentKeys } from "../../Constants";
+import homeLayoutModel from "../../pages/home/layoutModels/HomeLayoutModel";
 
 interface LayoutResetProps {
   toggleDrawer: () => void;
