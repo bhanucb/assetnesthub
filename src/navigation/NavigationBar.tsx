@@ -1,20 +1,16 @@
-import { useState } from "react";
+import { createRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import RightDrawer, { RightDrawerApi } from "./rightDrawer/RightDrawer";
+import RightDrawer, { RightDrawerRef } from "./rightDrawer/RightDrawer";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 function NavigationBar() {
-  const [rightDrawerApi, setRightDrawerApi] = useState<RightDrawerApi>();
-
-  function handleRightDrawerReady({ api }: { api: RightDrawerApi }) {
-    setRightDrawerApi(api);
-  }
+  const rightDrawerRef = createRef<RightDrawerRef>();
 
   function handleToggleDrawer() {
-    rightDrawerApi?.toggleDrawer();
+    rightDrawerRef.current?.toggleDrawer();
   }
 
   return (
@@ -33,7 +29,7 @@ function NavigationBar() {
         >
           <SettingsIcon />
         </IconButton>
-        <RightDrawer onReady={handleRightDrawerReady} />
+        <RightDrawer ref={rightDrawerRef} />
       </Toolbar>
     </AppBar>
   );
