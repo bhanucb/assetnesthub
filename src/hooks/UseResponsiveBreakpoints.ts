@@ -1,6 +1,6 @@
 import { useMediaQuery, useTheme } from "@mui/material";
 
-function useMobile() {
+function useResponsiveBreakpoints() {
   const theme = useTheme();
 
   const result = {
@@ -28,4 +28,4 @@ function useMobile() {
   return result;
 }
 
-export default useMobile;
+export default useResponsiveBreakpoints;

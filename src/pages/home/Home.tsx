@@ -29,12 +29,12 @@ import AppLayout, {
 import Box from "@mui/material/Box";
 import homeLayoutModel from "./layoutModels/HomeLayoutModel";
 import mobileHomeLayout from "./layoutModels/MobileHomeLayoutModel";
-import useMobile from "../../hooks/UseMobile";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
 import { NAVIGATION_BAR_HEIGHT } from "../../navigation/Constants";
 
 function Home() {
   const layoutRef = createRef<Layout>();
-  const { isMobile } = useMobile();
+  const { isMobile } = useResponsiveBreakpoints();
   const [layoutModel, setLayoutModel] = useState<Model>(
     Model.fromJson(homeLayoutModel)
   );

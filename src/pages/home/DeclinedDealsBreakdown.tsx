@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { DeclinedDealData, getDeclinedDeals } from "../../api/DeclinedDeals";
 import { formatPercentage } from "../../utils/Misc";
-import useMobile from "../../hooks/UseMobile";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
 
 const StyledGridContainer = styled(Box)`
   width: 100%;
@@ -12,7 +12,7 @@ const StyledGridContainer = styled(Box)`
 
 const DeclinedDealsBreakdown: FC = () => {
   const [data, setData] = useState<DeclinedDealData[]>([]);
-  const { isMobile } = useMobile();
+  const { isMobile } = useResponsiveBreakpoints();
 
   useEffect(() => {
     getDeclinedDeals()

@@ -21,7 +21,7 @@ import { onSelectTab } from "../../state/TabManagementSlice";
 import { LayoutComponentKeys } from "../../Constants";
 import homeLayoutModel from "../../pages/home/layoutModels/HomeLayoutModel";
 import mobileHomeLayoutModel from "../../pages/home/layoutModels/MobileHomeLayoutModel";
-import useMobile from "../../hooks/UseMobile";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
 
 interface LayoutResetProps {
   toggleDrawer: () => void;
@@ -31,7 +31,7 @@ const confirmMessage = "Are you sure you want to reset the layout?";
 
 const LayoutSection: FC<LayoutResetProps> = (props) => {
   const dispatch = useAppDispatch();
-  const { isMobile } = useMobile();
+  const { isMobile } = useResponsiveBreakpoints();
   const { popOuts, popoutProperties } = useAppSelector(
     (state) => state.popouts
   );

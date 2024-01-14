@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../state/Store";
 import usePopout from "./hooks/UsePopout";
 import { PopoutContext } from "./context/PopoutContext";
 import { dequeuePopOuts } from "../../state/PopupSlice";
-import useMobile from "../../hooks/UseMobile";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
 import { saveDesktopLayout, saveMobileLayout } from "../../api/Layouts";
 
 type LayoutPopoutProps = PropsWithChildren & { layoutModel: Model };
@@ -15,7 +15,7 @@ const LayoutPopout = (props: LayoutPopoutProps) => {
   const { windowRefs } = useContext(PopoutContext);
   const { lastPopout, popOuts } = useAppSelector((state) => state.popouts);
   const { unmountComponents } = usePopout();
-  const { isMobile } = useMobile();
+  const { isMobile } = useResponsiveBreakpoints();
   const dispatch = useAppDispatch();
 
   // action to run when a pop out is docked in

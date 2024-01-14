@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { getRealEstateData, PropertyData } from "../../api/RealEstateData";
 import { formatCurrency } from "../../utils/Misc";
-import useMobile from "../../hooks/UseMobile";
+import useResponsiveBreakpoints from "../../hooks/UseResponsiveBreakpoints";
 
 const StyledGridContainer = styled(Box)`
   width: 100%;
@@ -12,7 +12,7 @@ const StyledGridContainer = styled(Box)`
 
 const PropTypeBreakdown: FC = () => {
   const [data, setData] = useState<PropertyData[]>([]);
-  const { isMobile } = useMobile();
+  const { isMobile } = useResponsiveBreakpoints();
 
   useEffect(() => {
     getRealEstateData()
