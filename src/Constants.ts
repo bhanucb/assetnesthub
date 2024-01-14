@@ -4,7 +4,6 @@ export enum LayoutComponentKeys {
   propTypeBreakdown = "propTypeBreakdown",
   trendOfTotalAllocationAmount = "trendOfTotalAllocationAmount",
   declinedDealsBreakdown = "declinedDealsBreakdown",
-  pricingLayout = "pricingLayout",
   unmount = "unmount",
   error = "error",
 }

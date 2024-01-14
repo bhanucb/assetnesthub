@@ -5,7 +5,6 @@ import InvAmountByPropType from "../../pages/home/InvAmountByPropType";
 import PropTypeBreakdown from "../../pages/home/PropTypeBreakdown";
 import TrendOfTotalAllocatedAmount from "../../pages/home/TrendOfTotalAllocatedAmount";
 import DeclinedDealsBreakdown from "../../pages/home/DeclinedDealsBreakdown";
-import PricingLayout from "../../pages/home/PricingLayout";
 import { TabNode } from "flexlayout-react";
 import Unmount from "../popout/Unmount";
 
@@ -23,7 +22,6 @@ export const layoutComponents = new Map<LayoutComponentKeys, ReactElement>([
     <TrendOfTotalAllocatedAmount />,
   ],
   [LayoutComponentKeys.declinedDealsBreakdown, <DeclinedDealsBreakdown />],
-  [LayoutComponentKeys.pricingLayout, <PricingLayout />],
   [LayoutComponentKeys.error, <div>Error Loading Component</div>],
 ]);
 /* eslint-enable react/jsx-key */
